@@ -15,111 +15,126 @@ package org.openapitools.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.math.BigDecimal;
 import org.openapitools.client.model.Apple;
 import org.openapitools.client.model.Banana;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.openapitools.client.JSON;
-
 
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
+
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
 import org.openapitools.client.JSON;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-@JsonDeserialize(using=GmFruit.GmFruitDeserializer.class)
-@JsonSerialize(using = GmFruit.GmFruitSerializer.class)
 public class GmFruit extends AbstractOpenApiSchema {
     private static final Logger log = Logger.getLogger(GmFruit.class.getName());
 
-    public static class GmFruitSerializer extends StdSerializer<GmFruit> {
-        public GmFruitSerializer(Class<GmFruit> t) {
-            super(t);
-        }
-
-        public GmFruitSerializer() {
-            this(null);
-        }
-
+    public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+        @SuppressWarnings("unchecked")
         @Override
-        public void serialize(GmFruit value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
-            jgen.writeObject(value.getActualInstance());
-        }
-    }
-
-    public static class GmFruitDeserializer extends StdDeserializer<GmFruit> {
-        public GmFruitDeserializer() {
-            this(GmFruit.class);
-        }
-
-        public GmFruitDeserializer(Class<?> vc) {
-            super(vc);
-        }
-
-        @Override
-        public GmFruit deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-            JsonNode tree = jp.readValueAsTree();
-
-            Object deserialized = null;
-            // deserialize Apple
-            try {
-                deserialized = tree.traverse(jp.getCodec()).readValueAs(Apple.class);
-                GmFruit ret = new GmFruit();
-                ret.setActualInstance(deserialized);
-                return ret;
-            } catch (Exception e) {
-                // deserialization failed, continue, log to help debugging
-                log.log(Level.FINER, "Input data does not match 'GmFruit'", e);
+        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+            if (!GmFruit.class.isAssignableFrom(type.getRawType())) {
+                return null; // this class only serializes 'GmFruit' and its subtypes
             }
+            final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+            final TypeAdapter<Apple> adapterApple = gson.getDelegateAdapter(this, TypeToken.get(Apple.class));
+            final TypeAdapter<Banana> adapterBanana = gson.getDelegateAdapter(this, TypeToken.get(Banana.class));
 
-            // deserialize Banana
-            try {
-                deserialized = tree.traverse(jp.getCodec()).readValueAs(Banana.class);
-                GmFruit ret = new GmFruit();
-                ret.setActualInstance(deserialized);
-                return ret;
-            } catch (Exception e) {
-                // deserialization failed, continue, log to help debugging
-                log.log(Level.FINER, "Input data does not match 'GmFruit'", e);
-            }
+            return (TypeAdapter<T>) new TypeAdapter<GmFruit>() {
+                @Override
+                public void write(JsonWriter out, GmFruit value) throws IOException {
+                    if (value == null || value.getActualInstance() == null) {
+                        elementAdapter.write(out, null);
+                        return;
+                    }
 
-            throw new IOException(String.format("Failed deserialization for GmFruit: no match found"));
-        }
+                    // check if the actual instance is of the type `Apple`
+                    if (value.getActualInstance() instanceof Apple) {
+                        JsonObject obj = adapterApple.toJsonTree((Apple)value.getActualInstance()).getAsJsonObject();
+                        elementAdapter.write(out, obj);
+                        return;
+                    }
 
-        /**
-         * Handle deserialization of the 'null' value.
-         */
-        @Override
-        public GmFruit getNullValue(DeserializationContext ctxt) throws JsonMappingException {
-            throw new JsonMappingException(ctxt.getParser(), "GmFruit cannot be null");
+                    // check if the actual instance is of the type `Banana`
+                    if (value.getActualInstance() instanceof Banana) {
+                        JsonObject obj = adapterBanana.toJsonTree((Banana)value.getActualInstance()).getAsJsonObject();
+                        elementAdapter.write(out, obj);
+                        return;
+                    }
+
+                    throw new IOException("Failed to serialize as the type doesn't match anyOf schemas: Apple, Banana");
+                }
+
+                @Override
+                public GmFruit read(JsonReader in) throws IOException {
+                    Object deserialized = null;
+                    JsonObject jsonObject = elementAdapter.read(in).getAsJsonObject();
+
+                    // deserialize Apple
+                    try {
+                        // validate the JSON object to see if any exception is thrown
+                        Apple.validateJsonObject(jsonObject);
+                        log.log(Level.FINER, "Input data matches schema 'Apple'");
+                        GmFruit ret = new GmFruit();
+                        ret.setActualInstance(adapterApple.fromJsonTree(jsonObject));
+                        return ret;
+                    } catch (Exception e) {
+                        // deserialization failed, continue
+                        log.log(Level.FINER, "Input data does not match schema 'Apple'", e);
+                    }
+
+                    // deserialize Banana
+                    try {
+                        // validate the JSON object to see if any exception is thrown
+                        Banana.validateJsonObject(jsonObject);
+                        log.log(Level.FINER, "Input data matches schema 'Banana'");
+                        GmFruit ret = new GmFruit();
+                        ret.setActualInstance(adapterBanana.fromJsonTree(jsonObject));
+                        return ret;
+                    } catch (Exception e) {
+                        // deserialization failed, continue
+                        log.log(Level.FINER, "Input data does not match schema 'Banana'", e);
+                    }
+
+
+                    throw new IOException(String.format("Failed deserialization for GmFruit: no class matched. JSON: %s", jsonObject.toString()));
+                }
+            }.nullSafe();
         }
     }
 
@@ -145,7 +160,6 @@ public class GmFruit extends AbstractOpenApiSchema {
         });
         schemas.put("Banana", new GenericType<Banana>() {
         });
-        JSON.registerDescendants(GmFruit.class, Collections.unmodifiableMap(schemas));
     }
 
     @Override
@@ -163,12 +177,12 @@ public class GmFruit extends AbstractOpenApiSchema {
      */
     @Override
     public void setActualInstance(Object instance) {
-        if (JSON.isInstanceOf(Apple.class, instance, new HashSet<Class<?>>())) {
+        if (instance instanceof Apple) {
             super.setActualInstance(instance);
             return;
         }
 
-        if (JSON.isInstanceOf(Banana.class, instance, new HashSet<Class<?>>())) {
+        if (instance instanceof Banana) {
             super.setActualInstance(instance);
             return;
         }
@@ -209,5 +223,55 @@ public class GmFruit extends AbstractOpenApiSchema {
         return (Banana)super.getActualInstance();
     }
 
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to GmFruit
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+    // validate anyOf schemas one by one
+    int validCount = 0;
+    // validate the json string with Apple
+    try {
+      Apple.validateJsonObject(jsonObj);
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
+    } catch (Exception e) {
+      // continue to the next one
+    }
+    // validate the json string with Banana
+    try {
+      Banana.validateJsonObject(jsonObj);
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
+    } catch (Exception e) {
+      // continue to the next one
+    }
+    if (validCount == 0) {
+      throw new IOException(String.format("The JSON string is invalid for GmFruit with anyOf schemas: Apple, Banana. JSON: %s", jsonObj.toString()));
+    }
+  }
+
+ /**
+  * Create an instance of GmFruit given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of GmFruit
+  * @throws IOException if the JSON string is invalid with respect to GmFruit
+  */
+  public static GmFruit fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, GmFruit.class);
+  }
+
+ /**
+  * Convert an instance of GmFruit to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

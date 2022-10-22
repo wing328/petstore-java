@@ -15,43 +15,59 @@ package org.openapitools.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.math.BigDecimal;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.openapitools.client.JSON;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.openapitools.client.JSON;
 
 /**
  * OuterComposite
  */
-@JsonPropertyOrder({
-  OuterComposite.JSON_PROPERTY_MY_NUMBER,
-  OuterComposite.JSON_PROPERTY_MY_STRING,
-  OuterComposite.JSON_PROPERTY_MY_BOOLEAN
-})
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class OuterComposite {
-  public static final String JSON_PROPERTY_MY_NUMBER = "my_number";
+  public static final String SERIALIZED_NAME_MY_NUMBER = "my_number";
+  @SerializedName(SERIALIZED_NAME_MY_NUMBER)
   private BigDecimal myNumber;
 
-  public static final String JSON_PROPERTY_MY_STRING = "my_string";
+  public static final String SERIALIZED_NAME_MY_STRING = "my_string";
+  @SerializedName(SERIALIZED_NAME_MY_STRING)
   private String myString;
 
-  public static final String JSON_PROPERTY_MY_BOOLEAN = "my_boolean";
+  public static final String SERIALIZED_NAME_MY_BOOLEAN = "my_boolean";
+  @SerializedName(SERIALIZED_NAME_MY_BOOLEAN)
   private Boolean myBoolean;
 
-  public OuterComposite() { 
+  public OuterComposite() {
   }
 
   public OuterComposite myNumber(BigDecimal myNumber) {
+    
     this.myNumber = myNumber;
     return this;
   }
@@ -62,22 +78,19 @@ public class OuterComposite {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MY_NUMBER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public BigDecimal getMyNumber() {
     return myNumber;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MY_NUMBER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMyNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
   }
 
 
   public OuterComposite myString(String myString) {
+    
     this.myString = myString;
     return this;
   }
@@ -88,22 +101,19 @@ public class OuterComposite {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MY_STRING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getMyString() {
     return myString;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MY_STRING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMyString(String myString) {
     this.myString = myString;
   }
 
 
   public OuterComposite myBoolean(Boolean myBoolean) {
+    
     this.myBoolean = myBoolean;
     return this;
   }
@@ -114,24 +124,53 @@ public class OuterComposite {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MY_BOOLEAN)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Boolean getMyBoolean() {
     return myBoolean;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MY_BOOLEAN)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMyBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
   }
 
+  /**
+   * A container for additional, undeclared properties.
+   * This is a holder for any undeclared properties as specified with
+   * the 'additionalProperties' keyword in the OAS document.
+   */
+  private Map<String, Object> additionalProperties;
 
   /**
-   * Return true if this OuterComposite object is equal to o.
+   * Set the additional (undeclared) property with the specified name and value.
+   * If the property does not already exist, create it otherwise replace it.
    */
+  public OuterComposite putAdditionalProperty(String key, Object value) {
+    if (this.additionalProperties == null) {
+        this.additionalProperties = new HashMap<String, Object>();
+    }
+    this.additionalProperties.put(key, value);
+    return this;
+  }
+
+  /**
+   * Return the additional (undeclared) property.
+   */
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  /**
+   * Return the additional (undeclared) property with the specified name.
+   */
+  public Object getAdditionalProperty(String key) {
+    if (this.additionalProperties == null) {
+        return null;
+    }
+    return this.additionalProperties.get(key);
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -143,12 +182,13 @@ public class OuterComposite {
     OuterComposite outerComposite = (OuterComposite) o;
     return Objects.equals(this.myNumber, outerComposite.myNumber) &&
         Objects.equals(this.myString, outerComposite.myString) &&
-        Objects.equals(this.myBoolean, outerComposite.myBoolean);
+        Objects.equals(this.myBoolean, outerComposite.myBoolean)&&
+        Objects.equals(this.additionalProperties, outerComposite.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(myNumber, myString, myBoolean);
+    return Objects.hash(myNumber, myString, myBoolean, additionalProperties);
   }
 
   @Override
@@ -158,6 +198,7 @@ public class OuterComposite {
     sb.append("    myNumber: ").append(toIndentedString(myNumber)).append("\n");
     sb.append("    myString: ").append(toIndentedString(myString)).append("\n");
     sb.append("    myBoolean: ").append(toIndentedString(myBoolean)).append("\n");
+    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -173,5 +214,122 @@ public class OuterComposite {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("my_number");
+    openapiFields.add("my_string");
+    openapiFields.add("my_boolean");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to OuterComposite
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!OuterComposite.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in OuterComposite is not found in the empty JSON string", OuterComposite.openapiRequiredFields.toString()));
+        }
+      }
+      if ((jsonObj.get("my_string") != null && !jsonObj.get("my_string").isJsonNull()) && !jsonObj.get("my_string").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `my_string` to be a primitive type in the JSON string but got `%s`", jsonObj.get("my_string").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!OuterComposite.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'OuterComposite' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<OuterComposite> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(OuterComposite.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<OuterComposite>() {
+           @Override
+           public void write(JsonWriter out, OuterComposite value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             obj.remove("additionalProperties");
+             // serialize additonal properties
+             if (value.getAdditionalProperties() != null) {
+               for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
+                 if (entry.getValue() instanceof String)
+                   obj.addProperty(entry.getKey(), (String) entry.getValue());
+                 else if (entry.getValue() instanceof Number)
+                   obj.addProperty(entry.getKey(), (Number) entry.getValue());
+                 else if (entry.getValue() instanceof Boolean)
+                   obj.addProperty(entry.getKey(), (Boolean) entry.getValue());
+                 else if (entry.getValue() instanceof Character)
+                   obj.addProperty(entry.getKey(), (Character) entry.getValue());
+                 else {
+                   obj.add(entry.getKey(), gson.toJsonTree(entry.getValue()).getAsJsonObject());
+                 }
+               }
+             }
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public OuterComposite read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             // store additional fields in the deserialized instance
+             OuterComposite instance = thisAdapter.fromJsonTree(jsonObj);
+             for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+               if (!openapiFields.contains(entry.getKey())) {
+                 if (entry.getValue().isJsonPrimitive()) { // primitive type
+                   if (entry.getValue().getAsJsonPrimitive().isString())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsString());
+                   else if (entry.getValue().getAsJsonPrimitive().isNumber())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsNumber());
+                   else if (entry.getValue().getAsJsonPrimitive().isBoolean())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsBoolean());
+                   else
+                     throw new IllegalArgumentException(String.format("The field `%s` has unknown primitive type. Value: %s", entry.getKey(), entry.getValue().toString()));
+                 } else if (entry.getValue().isJsonArray()) {
+                     instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), List.class));
+                 } else { // JSON object
+                     instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), HashMap.class));
+                 }
+               }
+             }
+             return instance;
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of OuterComposite given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of OuterComposite
+  * @throws IOException if the JSON string is invalid with respect to OuterComposite
+  */
+  public static OuterComposite fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, OuterComposite.class);
+  }
+
+ /**
+  * Convert an instance of OuterComposite to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

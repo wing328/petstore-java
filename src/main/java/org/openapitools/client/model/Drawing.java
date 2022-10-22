@@ -13,21 +13,16 @@
 
 package org.openapitools.client.model;
 
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import java.util.Objects;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.openapitools.client.model.Fruit;
@@ -35,40 +30,54 @@ import org.openapitools.client.model.NullableShape;
 import org.openapitools.client.model.Shape;
 import org.openapitools.client.model.ShapeOrNull;
 import org.openapitools.jackson.nullable.JsonNullable;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.util.NoSuchElementException;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.openapitools.client.JSON;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.openapitools.client.JSON;
 
 /**
  * Drawing
  */
-@JsonPropertyOrder({
-  Drawing.JSON_PROPERTY_MAIN_SHAPE,
-  Drawing.JSON_PROPERTY_SHAPE_OR_NULL,
-  Drawing.JSON_PROPERTY_NULLABLE_SHAPE,
-  Drawing.JSON_PROPERTY_SHAPES
-})
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class Drawing {
-  public static final String JSON_PROPERTY_MAIN_SHAPE = "mainShape";
+  public static final String SERIALIZED_NAME_MAIN_SHAPE = "mainShape";
+  @SerializedName(SERIALIZED_NAME_MAIN_SHAPE)
   private Shape mainShape;
 
-  public static final String JSON_PROPERTY_SHAPE_OR_NULL = "shapeOrNull";
+  public static final String SERIALIZED_NAME_SHAPE_OR_NULL = "shapeOrNull";
+  @SerializedName(SERIALIZED_NAME_SHAPE_OR_NULL)
   private ShapeOrNull shapeOrNull;
 
-  public static final String JSON_PROPERTY_NULLABLE_SHAPE = "nullableShape";
-  private JsonNullable<NullableShape> nullableShape = JsonNullable.<NullableShape>undefined();
+  public static final String SERIALIZED_NAME_NULLABLE_SHAPE = "nullableShape";
+  @SerializedName(SERIALIZED_NAME_NULLABLE_SHAPE)
+  private NullableShape nullableShape;
 
-  public static final String JSON_PROPERTY_SHAPES = "shapes";
+  public static final String SERIALIZED_NAME_SHAPES = "shapes";
+  @SerializedName(SERIALIZED_NAME_SHAPES)
   private List<Shape> shapes = null;
 
-  public Drawing() { 
+  public Drawing() {
   }
 
   public Drawing mainShape(Shape mainShape) {
+    
     this.mainShape = mainShape;
     return this;
   }
@@ -79,22 +88,19 @@ public class Drawing {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MAIN_SHAPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Shape getMainShape() {
     return mainShape;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MAIN_SHAPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMainShape(Shape mainShape) {
     this.mainShape = mainShape;
   }
 
 
   public Drawing shapeOrNull(ShapeOrNull shapeOrNull) {
+    
     this.shapeOrNull = shapeOrNull;
     return this;
   }
@@ -105,23 +111,20 @@ public class Drawing {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_SHAPE_OR_NULL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public ShapeOrNull getShapeOrNull() {
     return shapeOrNull;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SHAPE_OR_NULL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setShapeOrNull(ShapeOrNull shapeOrNull) {
     this.shapeOrNull = shapeOrNull;
   }
 
 
   public Drawing nullableShape(NullableShape nullableShape) {
-    this.nullableShape = JsonNullable.<NullableShape>of(nullableShape);
+    
+    this.nullableShape = nullableShape;
     return this;
   }
 
@@ -131,30 +134,19 @@ public class Drawing {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public NullableShape getNullableShape() {
-        return nullableShape.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_NULLABLE_SHAPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<NullableShape> getNullableShape_JsonNullable() {
     return nullableShape;
   }
-  
-  @JsonProperty(JSON_PROPERTY_NULLABLE_SHAPE)
-  public void setNullableShape_JsonNullable(JsonNullable<NullableShape> nullableShape) {
-    this.nullableShape = nullableShape;
-  }
+
 
   public void setNullableShape(NullableShape nullableShape) {
-    this.nullableShape = JsonNullable.<NullableShape>of(nullableShape);
+    this.nullableShape = nullableShape;
   }
 
 
   public Drawing shapes(List<Shape> shapes) {
+    
     this.shapes = shapes;
     return this;
   }
@@ -173,61 +165,18 @@ public class Drawing {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_SHAPES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<Shape> getShapes() {
     return shapes;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SHAPES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setShapes(List<Shape> shapes) {
     this.shapes = shapes;
   }
 
-  /**
-   * A container for additional, undeclared properties.
-   * This is a holder for any undeclared properties as specified with
-   * the 'additionalProperties' keyword in the OAS document.
-   */
-  private Map<String, Fruit> additionalProperties;
 
-  /**
-   * Set the additional (undeclared) property with the specified name and value.
-   * If the property does not already exist, create it otherwise replace it.
-   */
-  @JsonAnySetter
-  public Drawing putAdditionalProperty(String key, Fruit value) {
-    if (this.additionalProperties == null) {
-        this.additionalProperties = new HashMap<String, Fruit>();
-    }
-    this.additionalProperties.put(key, value);
-    return this;
-  }
 
-  /**
-   * Return the additional (undeclared) property.
-   */
-  @JsonAnyGetter
-  public Map<String, Fruit> getAdditionalProperties() {
-    return additionalProperties;
-  }
-
-  /**
-   * Return the additional (undeclared) property with the specified name.
-   */
-  public Fruit getAdditionalProperty(String key) {
-    if (this.additionalProperties == null) {
-        return null;
-    }
-    return this.additionalProperties.get(key);
-  }
-
-  /**
-   * Return true if this Drawing object is equal to o.
-   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -239,9 +188,8 @@ public class Drawing {
     Drawing drawing = (Drawing) o;
     return Objects.equals(this.mainShape, drawing.mainShape) &&
         Objects.equals(this.shapeOrNull, drawing.shapeOrNull) &&
-        equalsNullable(this.nullableShape, drawing.nullableShape) &&
-        Objects.equals(this.shapes, drawing.shapes)&&
-        Objects.equals(this.additionalProperties, drawing.additionalProperties);
+        Objects.equals(this.nullableShape, drawing.nullableShape) &&
+        Objects.equals(this.shapes, drawing.shapes);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -250,7 +198,7 @@ public class Drawing {
 
   @Override
   public int hashCode() {
-    return Objects.hash(mainShape, shapeOrNull, hashCodeNullable(nullableShape), shapes, additionalProperties);
+    return Objects.hash(mainShape, shapeOrNull, nullableShape, shapes);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -268,7 +216,6 @@ public class Drawing {
     sb.append("    shapeOrNull: ").append(toIndentedString(shapeOrNull)).append("\n");
     sb.append("    nullableShape: ").append(toIndentedString(nullableShape)).append("\n");
     sb.append("    shapes: ").append(toIndentedString(shapes)).append("\n");
-    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -284,5 +231,117 @@ public class Drawing {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("mainShape");
+    openapiFields.add("shapeOrNull");
+    openapiFields.add("nullableShape");
+    openapiFields.add("shapes");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to Drawing
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!Drawing.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in Drawing is not found in the empty JSON string", Drawing.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!Drawing.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `Drawing` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      // validate the optional field `mainShape`
+      if (jsonObj.get("mainShape") != null && !jsonObj.get("mainShape").isJsonNull()) {
+        Shape.validateJsonObject(jsonObj.getAsJsonObject("mainShape"));
+      }
+      // validate the optional field `shapeOrNull`
+      if (jsonObj.get("shapeOrNull") != null && !jsonObj.get("shapeOrNull").isJsonNull()) {
+        ShapeOrNull.validateJsonObject(jsonObj.getAsJsonObject("shapeOrNull"));
+      }
+      // validate the optional field `nullableShape`
+      if (jsonObj.get("nullableShape") != null && !jsonObj.get("nullableShape").isJsonNull()) {
+        NullableShape.validateJsonObject(jsonObj.getAsJsonObject("nullableShape"));
+      }
+      if (jsonObj.get("shapes") != null && !jsonObj.get("shapes").isJsonNull()) {
+        JsonArray jsonArrayshapes = jsonObj.getAsJsonArray("shapes");
+        if (jsonArrayshapes != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("shapes").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `shapes` to be an array in the JSON string but got `%s`", jsonObj.get("shapes").toString()));
+          }
+
+          // validate the optional field `shapes` (array)
+          for (int i = 0; i < jsonArrayshapes.size(); i++) {
+            Shape.validateJsonObject(jsonArrayshapes.get(i).getAsJsonObject());
+          };
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!Drawing.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'Drawing' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<Drawing> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(Drawing.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<Drawing>() {
+           @Override
+           public void write(JsonWriter out, Drawing value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public Drawing read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of Drawing given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of Drawing
+  * @throws IOException if the JSON string is invalid with respect to Drawing
+  */
+  public static Drawing fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, Drawing.class);
+  }
+
+ /**
+  * Convert an instance of Drawing to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

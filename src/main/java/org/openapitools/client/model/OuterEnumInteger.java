@@ -15,18 +15,18 @@ package org.openapitools.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.openapitools.client.JSON;
+import com.google.gson.annotations.SerializedName;
 
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.io.IOException;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
 /**
  * Gets or Sets OuterEnumInteger
  */
+@JsonAdapter(OuterEnumInteger.Adapter.class)
 public enum OuterEnumInteger {
   
   NUMBER_0(0),
@@ -41,7 +41,6 @@ public enum OuterEnumInteger {
     this.value = value;
   }
 
-  @JsonValue
   public Integer getValue() {
     return value;
   }
@@ -51,7 +50,6 @@ public enum OuterEnumInteger {
     return String.valueOf(value);
   }
 
-  @JsonCreator
   public static OuterEnumInteger fromValue(Integer value) {
     for (OuterEnumInteger b : OuterEnumInteger.values()) {
       if (b.value.equals(value)) {
@@ -59,6 +57,19 @@ public enum OuterEnumInteger {
       }
     }
     throw new IllegalArgumentException("Unexpected value '" + value + "'");
+  }
+
+  public static class Adapter extends TypeAdapter<OuterEnumInteger> {
+    @Override
+    public void write(final JsonWriter jsonWriter, final OuterEnumInteger enumeration) throws IOException {
+      jsonWriter.value(enumeration.getValue());
+    }
+
+    @Override
+    public OuterEnumInteger read(final JsonReader jsonReader) throws IOException {
+      Integer value = jsonReader.nextInt();
+      return OuterEnumInteger.fromValue(value);
+    }
   }
 }
 

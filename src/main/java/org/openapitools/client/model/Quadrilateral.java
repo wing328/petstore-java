@@ -13,175 +13,156 @@
 
 package org.openapitools.client.model;
 
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import java.util.Objects;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import org.openapitools.client.model.ComplexQuadrilateral;
 import org.openapitools.client.model.SimpleQuadrilateral;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.openapitools.client.JSON;
-
-import com.fasterxml.jackson.core.type.TypeReference;
 
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
+
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
 import org.openapitools.client.JSON;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-@JsonDeserialize(using = Quadrilateral.QuadrilateralDeserializer.class)
-@JsonSerialize(using = Quadrilateral.QuadrilateralSerializer.class)
 public class Quadrilateral extends AbstractOpenApiSchema {
     private static final Logger log = Logger.getLogger(Quadrilateral.class.getName());
 
-    public static class QuadrilateralSerializer extends StdSerializer<Quadrilateral> {
-        public QuadrilateralSerializer(Class<Quadrilateral> t) {
-            super(t);
-        }
-
-        public QuadrilateralSerializer() {
-            this(null);
-        }
-
+    public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+        @SuppressWarnings("unchecked")
         @Override
-        public void serialize(Quadrilateral value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
-            jgen.writeObject(value.getActualInstance());
-        }
-    }
-
-    public static class QuadrilateralDeserializer extends StdDeserializer<Quadrilateral> {
-        public QuadrilateralDeserializer() {
-            this(Quadrilateral.class);
-        }
-
-        public QuadrilateralDeserializer(Class<?> vc) {
-            super(vc);
-        }
-
-        @Override
-        public Quadrilateral deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-            JsonNode tree = jp.readValueAsTree();
-            Object deserialized = null;
-            Quadrilateral newQuadrilateral = new Quadrilateral();
-            Map<String,Object> result2 = tree.traverse(jp.getCodec()).readValueAs(new TypeReference<Map<String, Object>>() {});
-            String discriminatorValue = (String)result2.get("quadrilateralType");
-            switch (discriminatorValue) {
-                case "ComplexQuadrilateral":
-                    deserialized = tree.traverse(jp.getCodec()).readValueAs(ComplexQuadrilateral.class);
-                    newQuadrilateral.setActualInstance(deserialized);
-                    return newQuadrilateral;
-                case "SimpleQuadrilateral":
-                    deserialized = tree.traverse(jp.getCodec()).readValueAs(SimpleQuadrilateral.class);
-                    newQuadrilateral.setActualInstance(deserialized);
-                    return newQuadrilateral;
-                default:
-                    log.log(Level.WARNING, String.format("Failed to lookup discriminator value `%s` for Quadrilateral. Possible values: ComplexQuadrilateral SimpleQuadrilateral", discriminatorValue));
+        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+            if (!Quadrilateral.class.isAssignableFrom(type.getRawType())) {
+                return null; // this class only serializes 'Quadrilateral' and its subtypes
             }
+            final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+            final TypeAdapter<ComplexQuadrilateral> adapterComplexQuadrilateral = gson.getDelegateAdapter(this, TypeToken.get(ComplexQuadrilateral.class));
+            final TypeAdapter<SimpleQuadrilateral> adapterSimpleQuadrilateral = gson.getDelegateAdapter(this, TypeToken.get(SimpleQuadrilateral.class));
 
-            boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
-            int match = 0;
-            JsonToken token = tree.traverse(jp.getCodec()).nextToken();
-            // deserialize ComplexQuadrilateral
-            try {
-                boolean attemptParsing = true;
-                // ensure that we respect type coercion as set on the client ObjectMapper
-                if (ComplexQuadrilateral.class.equals(Integer.class) || ComplexQuadrilateral.class.equals(Long.class) || ComplexQuadrilateral.class.equals(Float.class) || ComplexQuadrilateral.class.equals(Double.class) || ComplexQuadrilateral.class.equals(Boolean.class) || ComplexQuadrilateral.class.equals(String.class)) {
-                    attemptParsing = typeCoercion;
-                    if (!attemptParsing) {
-                        attemptParsing |= ((ComplexQuadrilateral.class.equals(Integer.class) || ComplexQuadrilateral.class.equals(Long.class)) && token == JsonToken.VALUE_NUMBER_INT);
-                        attemptParsing |= ((ComplexQuadrilateral.class.equals(Float.class) || ComplexQuadrilateral.class.equals(Double.class)) && token == JsonToken.VALUE_NUMBER_FLOAT);
-                        attemptParsing |= (ComplexQuadrilateral.class.equals(Boolean.class) && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
-                        attemptParsing |= (ComplexQuadrilateral.class.equals(String.class) && token == JsonToken.VALUE_STRING);
+            return (TypeAdapter<T>) new TypeAdapter<Quadrilateral>() {
+                @Override
+                public void write(JsonWriter out, Quadrilateral value) throws IOException {
+                    if (value == null || value.getActualInstance() == null) {
+                        elementAdapter.write(out, null);
+                        return;
                     }
-                }
-                if (attemptParsing) {
-                    deserialized = tree.traverse(jp.getCodec()).readValueAs(ComplexQuadrilateral.class);
-                    // TODO: there is no validation against JSON schema constraints
-                    // (min, max, enum, pattern...), this does not perform a strict JSON
-                    // validation, which means the 'match' count may be higher than it should be.
-                    match++;
-                    log.log(Level.FINER, "Input data matches schema 'ComplexQuadrilateral'");
-                }
-            } catch (Exception e) {
-                // deserialization failed, continue
-                log.log(Level.FINER, "Input data does not match schema 'ComplexQuadrilateral'", e);
-            }
 
-            // deserialize SimpleQuadrilateral
-            try {
-                boolean attemptParsing = true;
-                // ensure that we respect type coercion as set on the client ObjectMapper
-                if (SimpleQuadrilateral.class.equals(Integer.class) || SimpleQuadrilateral.class.equals(Long.class) || SimpleQuadrilateral.class.equals(Float.class) || SimpleQuadrilateral.class.equals(Double.class) || SimpleQuadrilateral.class.equals(Boolean.class) || SimpleQuadrilateral.class.equals(String.class)) {
-                    attemptParsing = typeCoercion;
-                    if (!attemptParsing) {
-                        attemptParsing |= ((SimpleQuadrilateral.class.equals(Integer.class) || SimpleQuadrilateral.class.equals(Long.class)) && token == JsonToken.VALUE_NUMBER_INT);
-                        attemptParsing |= ((SimpleQuadrilateral.class.equals(Float.class) || SimpleQuadrilateral.class.equals(Double.class)) && token == JsonToken.VALUE_NUMBER_FLOAT);
-                        attemptParsing |= (SimpleQuadrilateral.class.equals(Boolean.class) && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
-                        attemptParsing |= (SimpleQuadrilateral.class.equals(String.class) && token == JsonToken.VALUE_STRING);
+                    // check if the actual instance is of the type `ComplexQuadrilateral`
+                    if (value.getActualInstance() instanceof ComplexQuadrilateral) {
+                        JsonObject obj = adapterComplexQuadrilateral.toJsonTree((ComplexQuadrilateral)value.getActualInstance()).getAsJsonObject();
+                        elementAdapter.write(out, obj);
+                        return;
                     }
-                }
-                if (attemptParsing) {
-                    deserialized = tree.traverse(jp.getCodec()).readValueAs(SimpleQuadrilateral.class);
-                    // TODO: there is no validation against JSON schema constraints
-                    // (min, max, enum, pattern...), this does not perform a strict JSON
-                    // validation, which means the 'match' count may be higher than it should be.
-                    match++;
-                    log.log(Level.FINER, "Input data matches schema 'SimpleQuadrilateral'");
-                }
-            } catch (Exception e) {
-                // deserialization failed, continue
-                log.log(Level.FINER, "Input data does not match schema 'SimpleQuadrilateral'", e);
-            }
 
-            if (match == 1) {
-                Quadrilateral ret = new Quadrilateral();
-                ret.setActualInstance(deserialized);
-                return ret;
-            }
-            throw new IOException(String.format("Failed deserialization for Quadrilateral: %d classes match result, expected 1", match));
-        }
+                    // check if the actual instance is of the type `SimpleQuadrilateral`
+                    if (value.getActualInstance() instanceof SimpleQuadrilateral) {
+                        JsonObject obj = adapterSimpleQuadrilateral.toJsonTree((SimpleQuadrilateral)value.getActualInstance()).getAsJsonObject();
+                        elementAdapter.write(out, obj);
+                        return;
+                    }
 
-        /**
-         * Handle deserialization of the 'null' value.
-         */
-        @Override
-        public Quadrilateral getNullValue(DeserializationContext ctxt) throws JsonMappingException {
-            throw new JsonMappingException(ctxt.getParser(), "Quadrilateral cannot be null");
+                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: ComplexQuadrilateral, SimpleQuadrilateral");
+                }
+
+                @Override
+                public Quadrilateral read(JsonReader in) throws IOException {
+                    Object deserialized = null;
+                    JsonObject jsonObject = elementAdapter.read(in).getAsJsonObject();
+
+                    // use discriminator value for faster oneOf lookup
+                    Quadrilateral newQuadrilateral = new Quadrilateral();
+                    if (jsonObject.get("quadrilateralType") == null) {
+                        log.log(Level.WARNING, "Failed to lookup discriminator value for Quadrilateral as `quadrilateralType` was not found in the payload or the payload is empty.");
+                    } else  {
+                        // look up the discriminator value in the field `quadrilateralType`
+                        switch (jsonObject.get("quadrilateralType").getAsString()) {
+                            case "ComplexQuadrilateral":
+                                deserialized = adapterComplexQuadrilateral.fromJsonTree(jsonObject);
+                                newQuadrilateral.setActualInstance(deserialized);
+                                return newQuadrilateral;
+                            case "SimpleQuadrilateral":
+                                deserialized = adapterSimpleQuadrilateral.fromJsonTree(jsonObject);
+                                newQuadrilateral.setActualInstance(deserialized);
+                                return newQuadrilateral;
+                            default:
+                                log.log(Level.WARNING, String.format("Failed to lookup discriminator value `%s` for Quadrilateral. Possible values: ComplexQuadrilateral SimpleQuadrilateral", jsonObject.get("quadrilateralType").getAsString()));
+                        }
+                    }
+
+                    int match = 0;
+                    ArrayList<String> errorMessages = new ArrayList<>();
+                    TypeAdapter actualAdapter = elementAdapter;
+
+                    // deserialize ComplexQuadrilateral
+                    try {
+                        // validate the JSON object to see if any exception is thrown
+                        ComplexQuadrilateral.validateJsonObject(jsonObject);
+                        actualAdapter = adapterComplexQuadrilateral;
+                        match++;
+                        log.log(Level.FINER, "Input data matches schema 'ComplexQuadrilateral'");
+                    } catch (Exception e) {
+                        // deserialization failed, continue
+                        errorMessages.add(String.format("Deserialization for ComplexQuadrilateral failed with `%s`.", e.getMessage()));
+                        log.log(Level.FINER, "Input data does not match schema 'ComplexQuadrilateral'", e);
+                    }
+
+                    // deserialize SimpleQuadrilateral
+                    try {
+                        // validate the JSON object to see if any exception is thrown
+                        SimpleQuadrilateral.validateJsonObject(jsonObject);
+                        actualAdapter = adapterSimpleQuadrilateral;
+                        match++;
+                        log.log(Level.FINER, "Input data matches schema 'SimpleQuadrilateral'");
+                    } catch (Exception e) {
+                        // deserialization failed, continue
+                        errorMessages.add(String.format("Deserialization for SimpleQuadrilateral failed with `%s`.", e.getMessage()));
+                        log.log(Level.FINER, "Input data does not match schema 'SimpleQuadrilateral'", e);
+                    }
+
+                    if (match == 1) {
+                        Quadrilateral ret = new Quadrilateral();
+                        ret.setActualInstance(actualAdapter.fromJsonTree(jsonObject));
+                        return ret;
+                    }
+
+                    throw new IOException(String.format("Failed deserialization for Quadrilateral: %d classes match result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", match, errorMessages, jsonObject.toString()));
+                }
+            }.nullSafe();
         }
     }
 
@@ -191,56 +172,7 @@ public class Quadrilateral extends AbstractOpenApiSchema {
     public Quadrilateral() {
         super("oneOf", Boolean.FALSE);
     }
-  /**
-   * A container for additional, undeclared properties.
-   * This is a holder for any undeclared properties as specified with
-   * the 'additionalProperties' keyword in the OAS document.
-   */
-  private Map<String, Object> additionalProperties;
 
-  /**
-   * Set the additional (undeclared) property with the specified name and value.
-   * If the property does not already exist, create it otherwise replace it.
-   */
-  @JsonAnySetter
-  public Quadrilateral putAdditionalProperty(String key, Object value) {
-    if (this.additionalProperties == null) {
-        this.additionalProperties = new HashMap<String, Object>();
-    }
-    this.additionalProperties.put(key, value);
-    return this;
-  }
-
-  /**
-   * Return the additional (undeclared) property.
-   */
-  @JsonAnyGetter
-  public Map<String, Object> getAdditionalProperties() {
-    return additionalProperties;
-  }
-
-  /**
-   * Return the additional (undeclared) property with the specified name.
-   */
-  public Object getAdditionalProperty(String key) {
-    if (this.additionalProperties == null) {
-        return null;
-    }
-    return this.additionalProperties.get(key);
-  }
-
-    /**
-     * Return true if this Quadrilateral object is equal to o.
-     */
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o) && Objects.equals(this.additionalProperties, ((Quadrilateral)o).additionalProperties);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getActualInstance(), isNullable(), getSchemaType(), additionalProperties);
-    }
     public Quadrilateral(ComplexQuadrilateral o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
@@ -256,13 +188,6 @@ public class Quadrilateral extends AbstractOpenApiSchema {
         });
         schemas.put("SimpleQuadrilateral", new GenericType<SimpleQuadrilateral>() {
         });
-        JSON.registerDescendants(Quadrilateral.class, Collections.unmodifiableMap(schemas));
-        // Initialize and register the discriminator mappings.
-        Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
-        mappings.put("ComplexQuadrilateral", ComplexQuadrilateral.class);
-        mappings.put("SimpleQuadrilateral", SimpleQuadrilateral.class);
-        mappings.put("Quadrilateral", Quadrilateral.class);
-        JSON.registerDiscriminator(Quadrilateral.class, "quadrilateralType", mappings);
     }
 
     @Override
@@ -280,12 +205,12 @@ public class Quadrilateral extends AbstractOpenApiSchema {
      */
     @Override
     public void setActualInstance(Object instance) {
-        if (JSON.isInstanceOf(ComplexQuadrilateral.class, instance, new HashSet<Class<?>>())) {
+        if (instance instanceof ComplexQuadrilateral) {
             super.setActualInstance(instance);
             return;
         }
 
-        if (JSON.isInstanceOf(SimpleQuadrilateral.class, instance, new HashSet<Class<?>>())) {
+        if (instance instanceof SimpleQuadrilateral) {
             super.setActualInstance(instance);
             return;
         }
@@ -326,5 +251,56 @@ public class Quadrilateral extends AbstractOpenApiSchema {
         return (SimpleQuadrilateral)super.getActualInstance();
     }
 
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to Quadrilateral
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+    // validate oneOf schemas one by one
+    int validCount = 0;
+    ArrayList<String> errorMessages = new ArrayList<>();
+    // validate the json string with ComplexQuadrilateral
+    try {
+      ComplexQuadrilateral.validateJsonObject(jsonObj);
+      validCount++;
+    } catch (Exception e) {
+      errorMessages.add(String.format("Deserialization for ComplexQuadrilateral failed with `%s`.", e.getMessage()));
+      // continue to the next one
+    }
+    // validate the json string with SimpleQuadrilateral
+    try {
+      SimpleQuadrilateral.validateJsonObject(jsonObj);
+      validCount++;
+    } catch (Exception e) {
+      errorMessages.add(String.format("Deserialization for SimpleQuadrilateral failed with `%s`.", e.getMessage()));
+      // continue to the next one
+    }
+    if (validCount != 1) {
+      throw new IOException(String.format("The JSON string is invalid for Quadrilateral with oneOf schemas: ComplexQuadrilateral, SimpleQuadrilateral. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonObj.toString()));
+    }
+  }
+
+ /**
+  * Create an instance of Quadrilateral given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of Quadrilateral
+  * @throws IOException if the JSON string is invalid with respect to Quadrilateral
+  */
+  public static Quadrilateral fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, Quadrilateral.class);
+  }
+
+ /**
+  * Convert an instance of Quadrilateral to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

@@ -15,47 +15,50 @@ package org.openapitools.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import org.openapitools.client.model.OuterEnum;
 import org.openapitools.client.model.OuterEnumDefaultValue;
 import org.openapitools.client.model.OuterEnumInteger;
 import org.openapitools.client.model.OuterEnumIntegerDefaultValue;
 import org.openapitools.jackson.nullable.JsonNullable;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.util.NoSuchElementException;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.openapitools.client.JSON;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.openapitools.client.JSON;
 
 /**
  * EnumTest
  */
-@JsonPropertyOrder({
-  EnumTest.JSON_PROPERTY_ENUM_STRING,
-  EnumTest.JSON_PROPERTY_ENUM_STRING_REQUIRED,
-  EnumTest.JSON_PROPERTY_ENUM_INTEGER,
-  EnumTest.JSON_PROPERTY_ENUM_INTEGER_ONLY,
-  EnumTest.JSON_PROPERTY_ENUM_NUMBER,
-  EnumTest.JSON_PROPERTY_OUTER_ENUM,
-  EnumTest.JSON_PROPERTY_OUTER_ENUM_INTEGER,
-  EnumTest.JSON_PROPERTY_OUTER_ENUM_DEFAULT_VALUE,
-  EnumTest.JSON_PROPERTY_OUTER_ENUM_INTEGER_DEFAULT_VALUE
-})
-@JsonTypeName("Enum_Test")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class EnumTest {
   /**
    * Gets or Sets enumString
    */
+  @JsonAdapter(EnumStringEnum.Adapter.class)
   public enum EnumStringEnum {
     UPPER("UPPER"),
     
@@ -69,7 +72,6 @@ public class EnumTest {
       this.value = value;
     }
 
-    @JsonValue
     public String getValue() {
       return value;
     }
@@ -79,7 +81,6 @@ public class EnumTest {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static EnumStringEnum fromValue(String value) {
       for (EnumStringEnum b : EnumStringEnum.values()) {
         if (b.value.equals(value)) {
@@ -88,14 +89,29 @@ public class EnumTest {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter extends TypeAdapter<EnumStringEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumStringEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumStringEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return EnumStringEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_ENUM_STRING = "enum_string";
+  public static final String SERIALIZED_NAME_ENUM_STRING = "enum_string";
+  @SerializedName(SERIALIZED_NAME_ENUM_STRING)
   private EnumStringEnum enumString;
 
   /**
    * Gets or Sets enumStringRequired
    */
+  @JsonAdapter(EnumStringRequiredEnum.Adapter.class)
   public enum EnumStringRequiredEnum {
     UPPER("UPPER"),
     
@@ -109,7 +125,6 @@ public class EnumTest {
       this.value = value;
     }
 
-    @JsonValue
     public String getValue() {
       return value;
     }
@@ -119,7 +134,6 @@ public class EnumTest {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static EnumStringRequiredEnum fromValue(String value) {
       for (EnumStringRequiredEnum b : EnumStringRequiredEnum.values()) {
         if (b.value.equals(value)) {
@@ -128,14 +142,29 @@ public class EnumTest {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter extends TypeAdapter<EnumStringRequiredEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumStringRequiredEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumStringRequiredEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return EnumStringRequiredEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_ENUM_STRING_REQUIRED = "enum_string_required";
+  public static final String SERIALIZED_NAME_ENUM_STRING_REQUIRED = "enum_string_required";
+  @SerializedName(SERIALIZED_NAME_ENUM_STRING_REQUIRED)
   private EnumStringRequiredEnum enumStringRequired;
 
   /**
    * Gets or Sets enumInteger
    */
+  @JsonAdapter(EnumIntegerEnum.Adapter.class)
   public enum EnumIntegerEnum {
     NUMBER_1(1),
     
@@ -147,7 +176,6 @@ public class EnumTest {
       this.value = value;
     }
 
-    @JsonValue
     public Integer getValue() {
       return value;
     }
@@ -157,7 +185,6 @@ public class EnumTest {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static EnumIntegerEnum fromValue(Integer value) {
       for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
         if (b.value.equals(value)) {
@@ -166,14 +193,29 @@ public class EnumTest {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter extends TypeAdapter<EnumIntegerEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumIntegerEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumIntegerEnum read(final JsonReader jsonReader) throws IOException {
+        Integer value =  jsonReader.nextInt();
+        return EnumIntegerEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_ENUM_INTEGER = "enum_integer";
+  public static final String SERIALIZED_NAME_ENUM_INTEGER = "enum_integer";
+  @SerializedName(SERIALIZED_NAME_ENUM_INTEGER)
   private EnumIntegerEnum enumInteger;
 
   /**
    * Gets or Sets enumIntegerOnly
    */
+  @JsonAdapter(EnumIntegerOnlyEnum.Adapter.class)
   public enum EnumIntegerOnlyEnum {
     NUMBER_2(2),
     
@@ -185,7 +227,6 @@ public class EnumTest {
       this.value = value;
     }
 
-    @JsonValue
     public Integer getValue() {
       return value;
     }
@@ -195,7 +236,6 @@ public class EnumTest {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static EnumIntegerOnlyEnum fromValue(Integer value) {
       for (EnumIntegerOnlyEnum b : EnumIntegerOnlyEnum.values()) {
         if (b.value.equals(value)) {
@@ -204,14 +244,29 @@ public class EnumTest {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter extends TypeAdapter<EnumIntegerOnlyEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumIntegerOnlyEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumIntegerOnlyEnum read(final JsonReader jsonReader) throws IOException {
+        Integer value =  jsonReader.nextInt();
+        return EnumIntegerOnlyEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_ENUM_INTEGER_ONLY = "enum_integer_only";
+  public static final String SERIALIZED_NAME_ENUM_INTEGER_ONLY = "enum_integer_only";
+  @SerializedName(SERIALIZED_NAME_ENUM_INTEGER_ONLY)
   private EnumIntegerOnlyEnum enumIntegerOnly;
 
   /**
    * Gets or Sets enumNumber
    */
+  @JsonAdapter(EnumNumberEnum.Adapter.class)
   public enum EnumNumberEnum {
     NUMBER_1_DOT_1(1.1),
     
@@ -223,7 +278,6 @@ public class EnumTest {
       this.value = value;
     }
 
-    @JsonValue
     public Double getValue() {
       return value;
     }
@@ -233,7 +287,6 @@ public class EnumTest {
       return String.valueOf(value);
     }
 
-    @JsonCreator
     public static EnumNumberEnum fromValue(Double value) {
       for (EnumNumberEnum b : EnumNumberEnum.values()) {
         if (b.value.equals(value)) {
@@ -242,27 +295,46 @@ public class EnumTest {
       }
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
+
+    public static class Adapter extends TypeAdapter<EnumNumberEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumNumberEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumNumberEnum read(final JsonReader jsonReader) throws IOException {
+        Double value =  jsonReader.nextDouble();
+        return EnumNumberEnum.fromValue(value);
+      }
+    }
   }
 
-  public static final String JSON_PROPERTY_ENUM_NUMBER = "enum_number";
+  public static final String SERIALIZED_NAME_ENUM_NUMBER = "enum_number";
+  @SerializedName(SERIALIZED_NAME_ENUM_NUMBER)
   private EnumNumberEnum enumNumber;
 
-  public static final String JSON_PROPERTY_OUTER_ENUM = "outerEnum";
-  private JsonNullable<OuterEnum> outerEnum = JsonNullable.<OuterEnum>undefined();
+  public static final String SERIALIZED_NAME_OUTER_ENUM = "outerEnum";
+  @SerializedName(SERIALIZED_NAME_OUTER_ENUM)
+  private OuterEnum outerEnum;
 
-  public static final String JSON_PROPERTY_OUTER_ENUM_INTEGER = "outerEnumInteger";
+  public static final String SERIALIZED_NAME_OUTER_ENUM_INTEGER = "outerEnumInteger";
+  @SerializedName(SERIALIZED_NAME_OUTER_ENUM_INTEGER)
   private OuterEnumInteger outerEnumInteger;
 
-  public static final String JSON_PROPERTY_OUTER_ENUM_DEFAULT_VALUE = "outerEnumDefaultValue";
+  public static final String SERIALIZED_NAME_OUTER_ENUM_DEFAULT_VALUE = "outerEnumDefaultValue";
+  @SerializedName(SERIALIZED_NAME_OUTER_ENUM_DEFAULT_VALUE)
   private OuterEnumDefaultValue outerEnumDefaultValue = OuterEnumDefaultValue.PLACED;
 
-  public static final String JSON_PROPERTY_OUTER_ENUM_INTEGER_DEFAULT_VALUE = "outerEnumIntegerDefaultValue";
+  public static final String SERIALIZED_NAME_OUTER_ENUM_INTEGER_DEFAULT_VALUE = "outerEnumIntegerDefaultValue";
+  @SerializedName(SERIALIZED_NAME_OUTER_ENUM_INTEGER_DEFAULT_VALUE)
   private OuterEnumIntegerDefaultValue outerEnumIntegerDefaultValue = OuterEnumIntegerDefaultValue.NUMBER_0;
 
-  public EnumTest() { 
+  public EnumTest() {
   }
 
   public EnumTest enumString(EnumStringEnum enumString) {
+    
     this.enumString = enumString;
     return this;
   }
@@ -273,22 +345,19 @@ public class EnumTest {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_ENUM_STRING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public EnumStringEnum getEnumString() {
     return enumString;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ENUM_STRING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnumString(EnumStringEnum enumString) {
     this.enumString = enumString;
   }
 
 
   public EnumTest enumStringRequired(EnumStringRequiredEnum enumStringRequired) {
+    
     this.enumStringRequired = enumStringRequired;
     return this;
   }
@@ -299,22 +368,19 @@ public class EnumTest {
   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
-  @JsonProperty(JSON_PROPERTY_ENUM_STRING_REQUIRED)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
   public EnumStringRequiredEnum getEnumStringRequired() {
     return enumStringRequired;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ENUM_STRING_REQUIRED)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setEnumStringRequired(EnumStringRequiredEnum enumStringRequired) {
     this.enumStringRequired = enumStringRequired;
   }
 
 
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
+    
     this.enumInteger = enumInteger;
     return this;
   }
@@ -325,22 +391,19 @@ public class EnumTest {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_ENUM_INTEGER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ENUM_INTEGER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
   }
 
 
   public EnumTest enumIntegerOnly(EnumIntegerOnlyEnum enumIntegerOnly) {
+    
     this.enumIntegerOnly = enumIntegerOnly;
     return this;
   }
@@ -351,22 +414,19 @@ public class EnumTest {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_ENUM_INTEGER_ONLY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public EnumIntegerOnlyEnum getEnumIntegerOnly() {
     return enumIntegerOnly;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ENUM_INTEGER_ONLY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnumIntegerOnly(EnumIntegerOnlyEnum enumIntegerOnly) {
     this.enumIntegerOnly = enumIntegerOnly;
   }
 
 
   public EnumTest enumNumber(EnumNumberEnum enumNumber) {
+    
     this.enumNumber = enumNumber;
     return this;
   }
@@ -377,23 +437,20 @@ public class EnumTest {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_ENUM_NUMBER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ENUM_NUMBER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
   }
 
 
   public EnumTest outerEnum(OuterEnum outerEnum) {
-    this.outerEnum = JsonNullable.<OuterEnum>of(outerEnum);
+    
+    this.outerEnum = outerEnum;
     return this;
   }
 
@@ -403,30 +460,19 @@ public class EnumTest {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public OuterEnum getOuterEnum() {
-        return outerEnum.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_OUTER_ENUM)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<OuterEnum> getOuterEnum_JsonNullable() {
     return outerEnum;
   }
-  
-  @JsonProperty(JSON_PROPERTY_OUTER_ENUM)
-  public void setOuterEnum_JsonNullable(JsonNullable<OuterEnum> outerEnum) {
-    this.outerEnum = outerEnum;
-  }
+
 
   public void setOuterEnum(OuterEnum outerEnum) {
-    this.outerEnum = JsonNullable.<OuterEnum>of(outerEnum);
+    this.outerEnum = outerEnum;
   }
 
 
   public EnumTest outerEnumInteger(OuterEnumInteger outerEnumInteger) {
+    
     this.outerEnumInteger = outerEnumInteger;
     return this;
   }
@@ -437,22 +483,19 @@ public class EnumTest {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_OUTER_ENUM_INTEGER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public OuterEnumInteger getOuterEnumInteger() {
     return outerEnumInteger;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_OUTER_ENUM_INTEGER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOuterEnumInteger(OuterEnumInteger outerEnumInteger) {
     this.outerEnumInteger = outerEnumInteger;
   }
 
 
   public EnumTest outerEnumDefaultValue(OuterEnumDefaultValue outerEnumDefaultValue) {
+    
     this.outerEnumDefaultValue = outerEnumDefaultValue;
     return this;
   }
@@ -463,22 +506,19 @@ public class EnumTest {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_OUTER_ENUM_DEFAULT_VALUE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public OuterEnumDefaultValue getOuterEnumDefaultValue() {
     return outerEnumDefaultValue;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_OUTER_ENUM_DEFAULT_VALUE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOuterEnumDefaultValue(OuterEnumDefaultValue outerEnumDefaultValue) {
     this.outerEnumDefaultValue = outerEnumDefaultValue;
   }
 
 
   public EnumTest outerEnumIntegerDefaultValue(OuterEnumIntegerDefaultValue outerEnumIntegerDefaultValue) {
+    
     this.outerEnumIntegerDefaultValue = outerEnumIntegerDefaultValue;
     return this;
   }
@@ -489,24 +529,53 @@ public class EnumTest {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_OUTER_ENUM_INTEGER_DEFAULT_VALUE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public OuterEnumIntegerDefaultValue getOuterEnumIntegerDefaultValue() {
     return outerEnumIntegerDefaultValue;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_OUTER_ENUM_INTEGER_DEFAULT_VALUE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOuterEnumIntegerDefaultValue(OuterEnumIntegerDefaultValue outerEnumIntegerDefaultValue) {
     this.outerEnumIntegerDefaultValue = outerEnumIntegerDefaultValue;
   }
 
+  /**
+   * A container for additional, undeclared properties.
+   * This is a holder for any undeclared properties as specified with
+   * the 'additionalProperties' keyword in the OAS document.
+   */
+  private Map<String, Object> additionalProperties;
 
   /**
-   * Return true if this Enum_Test object is equal to o.
+   * Set the additional (undeclared) property with the specified name and value.
+   * If the property does not already exist, create it otherwise replace it.
    */
+  public EnumTest putAdditionalProperty(String key, Object value) {
+    if (this.additionalProperties == null) {
+        this.additionalProperties = new HashMap<String, Object>();
+    }
+    this.additionalProperties.put(key, value);
+    return this;
+  }
+
+  /**
+   * Return the additional (undeclared) property.
+   */
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  /**
+   * Return the additional (undeclared) property with the specified name.
+   */
+  public Object getAdditionalProperty(String key) {
+    if (this.additionalProperties == null) {
+        return null;
+    }
+    return this.additionalProperties.get(key);
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -521,10 +590,11 @@ public class EnumTest {
         Objects.equals(this.enumInteger, enumTest.enumInteger) &&
         Objects.equals(this.enumIntegerOnly, enumTest.enumIntegerOnly) &&
         Objects.equals(this.enumNumber, enumTest.enumNumber) &&
-        equalsNullable(this.outerEnum, enumTest.outerEnum) &&
+        Objects.equals(this.outerEnum, enumTest.outerEnum) &&
         Objects.equals(this.outerEnumInteger, enumTest.outerEnumInteger) &&
         Objects.equals(this.outerEnumDefaultValue, enumTest.outerEnumDefaultValue) &&
-        Objects.equals(this.outerEnumIntegerDefaultValue, enumTest.outerEnumIntegerDefaultValue);
+        Objects.equals(this.outerEnumIntegerDefaultValue, enumTest.outerEnumIntegerDefaultValue)&&
+        Objects.equals(this.additionalProperties, enumTest.additionalProperties);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -533,7 +603,7 @@ public class EnumTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(enumString, enumStringRequired, enumInteger, enumIntegerOnly, enumNumber, hashCodeNullable(outerEnum), outerEnumInteger, outerEnumDefaultValue, outerEnumIntegerDefaultValue);
+    return Objects.hash(enumString, enumStringRequired, enumInteger, enumIntegerOnly, enumNumber, outerEnum, outerEnumInteger, outerEnumDefaultValue, outerEnumIntegerDefaultValue, additionalProperties);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -556,6 +626,7 @@ public class EnumTest {
     sb.append("    outerEnumInteger: ").append(toIndentedString(outerEnumInteger)).append("\n");
     sb.append("    outerEnumDefaultValue: ").append(toIndentedString(outerEnumDefaultValue)).append("\n");
     sb.append("    outerEnumIntegerDefaultValue: ").append(toIndentedString(outerEnumIntegerDefaultValue)).append("\n");
+    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -571,5 +642,139 @@ public class EnumTest {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("enum_string");
+    openapiFields.add("enum_string_required");
+    openapiFields.add("enum_integer");
+    openapiFields.add("enum_integer_only");
+    openapiFields.add("enum_number");
+    openapiFields.add("outerEnum");
+    openapiFields.add("outerEnumInteger");
+    openapiFields.add("outerEnumDefaultValue");
+    openapiFields.add("outerEnumIntegerDefaultValue");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+    openapiRequiredFields.add("enum_string_required");
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to EnumTest
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!EnumTest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in EnumTest is not found in the empty JSON string", EnumTest.openapiRequiredFields.toString()));
+        }
+      }
+
+      // check to make sure all required properties/fields are present in the JSON string
+      for (String requiredField : EnumTest.openapiRequiredFields) {
+        if (jsonObj.get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("enum_string") != null && !jsonObj.get("enum_string").isJsonNull()) && !jsonObj.get("enum_string").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `enum_string` to be a primitive type in the JSON string but got `%s`", jsonObj.get("enum_string").toString()));
+      }
+      if (!jsonObj.get("enum_string_required").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `enum_string_required` to be a primitive type in the JSON string but got `%s`", jsonObj.get("enum_string_required").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!EnumTest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'EnumTest' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<EnumTest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(EnumTest.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<EnumTest>() {
+           @Override
+           public void write(JsonWriter out, EnumTest value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             obj.remove("additionalProperties");
+             // serialize additonal properties
+             if (value.getAdditionalProperties() != null) {
+               for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
+                 if (entry.getValue() instanceof String)
+                   obj.addProperty(entry.getKey(), (String) entry.getValue());
+                 else if (entry.getValue() instanceof Number)
+                   obj.addProperty(entry.getKey(), (Number) entry.getValue());
+                 else if (entry.getValue() instanceof Boolean)
+                   obj.addProperty(entry.getKey(), (Boolean) entry.getValue());
+                 else if (entry.getValue() instanceof Character)
+                   obj.addProperty(entry.getKey(), (Character) entry.getValue());
+                 else {
+                   obj.add(entry.getKey(), gson.toJsonTree(entry.getValue()).getAsJsonObject());
+                 }
+               }
+             }
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public EnumTest read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             // store additional fields in the deserialized instance
+             EnumTest instance = thisAdapter.fromJsonTree(jsonObj);
+             for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+               if (!openapiFields.contains(entry.getKey())) {
+                 if (entry.getValue().isJsonPrimitive()) { // primitive type
+                   if (entry.getValue().getAsJsonPrimitive().isString())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsString());
+                   else if (entry.getValue().getAsJsonPrimitive().isNumber())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsNumber());
+                   else if (entry.getValue().getAsJsonPrimitive().isBoolean())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsBoolean());
+                   else
+                     throw new IllegalArgumentException(String.format("The field `%s` has unknown primitive type. Value: %s", entry.getKey(), entry.getValue().toString()));
+                 } else if (entry.getValue().isJsonArray()) {
+                     instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), List.class));
+                 } else { // JSON object
+                     instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), HashMap.class));
+                 }
+               }
+             }
+             return instance;
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of EnumTest given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of EnumTest
+  * @throws IOException if the JSON string is invalid with respect to EnumTest
+  */
+  public static EnumTest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, EnumTest.class);
+  }
+
+ /**
+  * Convert an instance of EnumTest to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

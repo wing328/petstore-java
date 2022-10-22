@@ -15,69 +15,81 @@ package org.openapitools.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.openapitools.jackson.nullable.JsonNullable;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.util.NoSuchElementException;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.openapitools.client.JSON;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.openapitools.client.JSON;
 
 /**
  * AdditionalPropertiesClass
  */
-@JsonPropertyOrder({
-  AdditionalPropertiesClass.JSON_PROPERTY_MAP_PROPERTY,
-  AdditionalPropertiesClass.JSON_PROPERTY_MAP_OF_MAP_PROPERTY,
-  AdditionalPropertiesClass.JSON_PROPERTY_ANYTYPE1,
-  AdditionalPropertiesClass.JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE1,
-  AdditionalPropertiesClass.JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE2,
-  AdditionalPropertiesClass.JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE3,
-  AdditionalPropertiesClass.JSON_PROPERTY_EMPTY_MAP,
-  AdditionalPropertiesClass.JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_STRING
-})
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AdditionalPropertiesClass {
-  public static final String JSON_PROPERTY_MAP_PROPERTY = "map_property";
+  public static final String SERIALIZED_NAME_MAP_PROPERTY = "map_property";
+  @SerializedName(SERIALIZED_NAME_MAP_PROPERTY)
   private Map<String, String> mapProperty = null;
 
-  public static final String JSON_PROPERTY_MAP_OF_MAP_PROPERTY = "map_of_map_property";
+  public static final String SERIALIZED_NAME_MAP_OF_MAP_PROPERTY = "map_of_map_property";
+  @SerializedName(SERIALIZED_NAME_MAP_OF_MAP_PROPERTY)
   private Map<String, Map<String, String>> mapOfMapProperty = null;
 
-  public static final String JSON_PROPERTY_ANYTYPE1 = "anytype_1";
-  private JsonNullable<Object> anytype1 = JsonNullable.<Object>of(null);
+  public static final String SERIALIZED_NAME_ANYTYPE1 = "anytype_1";
+  @SerializedName(SERIALIZED_NAME_ANYTYPE1)
+  private Object anytype1 = null;
 
-  public static final String JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE1 = "map_with_undeclared_properties_anytype_1";
+  public static final String SERIALIZED_NAME_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE1 = "map_with_undeclared_properties_anytype_1";
+  @SerializedName(SERIALIZED_NAME_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE1)
   private Object mapWithUndeclaredPropertiesAnytype1;
 
-  public static final String JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE2 = "map_with_undeclared_properties_anytype_2";
+  public static final String SERIALIZED_NAME_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE2 = "map_with_undeclared_properties_anytype_2";
+  @SerializedName(SERIALIZED_NAME_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE2)
   private Object mapWithUndeclaredPropertiesAnytype2;
 
-  public static final String JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE3 = "map_with_undeclared_properties_anytype_3";
+  public static final String SERIALIZED_NAME_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE3 = "map_with_undeclared_properties_anytype_3";
+  @SerializedName(SERIALIZED_NAME_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE3)
   private Map<String, Object> mapWithUndeclaredPropertiesAnytype3 = null;
 
-  public static final String JSON_PROPERTY_EMPTY_MAP = "empty_map";
+  public static final String SERIALIZED_NAME_EMPTY_MAP = "empty_map";
+  @SerializedName(SERIALIZED_NAME_EMPTY_MAP)
   private Object emptyMap;
 
-  public static final String JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_STRING = "map_with_undeclared_properties_string";
+  public static final String SERIALIZED_NAME_MAP_WITH_UNDECLARED_PROPERTIES_STRING = "map_with_undeclared_properties_string";
+  @SerializedName(SERIALIZED_NAME_MAP_WITH_UNDECLARED_PROPERTIES_STRING)
   private Map<String, String> mapWithUndeclaredPropertiesString = null;
 
-  public AdditionalPropertiesClass() { 
+  public AdditionalPropertiesClass() {
   }
 
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
+    
     this.mapProperty = mapProperty;
     return this;
   }
@@ -96,22 +108,19 @@ public class AdditionalPropertiesClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MAP_PROPERTY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MAP_PROPERTY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
   }
 
 
   public AdditionalPropertiesClass mapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
+    
     this.mapOfMapProperty = mapOfMapProperty;
     return this;
   }
@@ -130,23 +139,20 @@ public class AdditionalPropertiesClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MAP_OF_MAP_PROPERTY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MAP_OF_MAP_PROPERTY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
     this.mapOfMapProperty = mapOfMapProperty;
   }
 
 
   public AdditionalPropertiesClass anytype1(Object anytype1) {
-    this.anytype1 = JsonNullable.<Object>of(anytype1);
+    
+    this.anytype1 = anytype1;
     return this;
   }
 
@@ -156,30 +162,19 @@ public class AdditionalPropertiesClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public Object getAnytype1() {
-        return anytype1.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_ANYTYPE1)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<Object> getAnytype1_JsonNullable() {
     return anytype1;
   }
-  
-  @JsonProperty(JSON_PROPERTY_ANYTYPE1)
-  public void setAnytype1_JsonNullable(JsonNullable<Object> anytype1) {
-    this.anytype1 = anytype1;
-  }
+
 
   public void setAnytype1(Object anytype1) {
-    this.anytype1 = JsonNullable.<Object>of(anytype1);
+    this.anytype1 = anytype1;
   }
 
 
   public AdditionalPropertiesClass mapWithUndeclaredPropertiesAnytype1(Object mapWithUndeclaredPropertiesAnytype1) {
+    
     this.mapWithUndeclaredPropertiesAnytype1 = mapWithUndeclaredPropertiesAnytype1;
     return this;
   }
@@ -190,22 +185,19 @@ public class AdditionalPropertiesClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE1)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Object getMapWithUndeclaredPropertiesAnytype1() {
     return mapWithUndeclaredPropertiesAnytype1;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE1)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMapWithUndeclaredPropertiesAnytype1(Object mapWithUndeclaredPropertiesAnytype1) {
     this.mapWithUndeclaredPropertiesAnytype1 = mapWithUndeclaredPropertiesAnytype1;
   }
 
 
   public AdditionalPropertiesClass mapWithUndeclaredPropertiesAnytype2(Object mapWithUndeclaredPropertiesAnytype2) {
+    
     this.mapWithUndeclaredPropertiesAnytype2 = mapWithUndeclaredPropertiesAnytype2;
     return this;
   }
@@ -216,22 +208,19 @@ public class AdditionalPropertiesClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE2)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Object getMapWithUndeclaredPropertiesAnytype2() {
     return mapWithUndeclaredPropertiesAnytype2;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE2)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMapWithUndeclaredPropertiesAnytype2(Object mapWithUndeclaredPropertiesAnytype2) {
     this.mapWithUndeclaredPropertiesAnytype2 = mapWithUndeclaredPropertiesAnytype2;
   }
 
 
   public AdditionalPropertiesClass mapWithUndeclaredPropertiesAnytype3(Map<String, Object> mapWithUndeclaredPropertiesAnytype3) {
+    
     this.mapWithUndeclaredPropertiesAnytype3 = mapWithUndeclaredPropertiesAnytype3;
     return this;
   }
@@ -250,22 +239,19 @@ public class AdditionalPropertiesClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE3)
-  @JsonInclude(content = JsonInclude.Include.ALWAYS, value = JsonInclude.Include.USE_DEFAULTS)
 
   public Map<String, Object> getMapWithUndeclaredPropertiesAnytype3() {
     return mapWithUndeclaredPropertiesAnytype3;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_ANYTYPE3)
-  @JsonInclude(content = JsonInclude.Include.ALWAYS, value = JsonInclude.Include.USE_DEFAULTS)
   public void setMapWithUndeclaredPropertiesAnytype3(Map<String, Object> mapWithUndeclaredPropertiesAnytype3) {
     this.mapWithUndeclaredPropertiesAnytype3 = mapWithUndeclaredPropertiesAnytype3;
   }
 
 
   public AdditionalPropertiesClass emptyMap(Object emptyMap) {
+    
     this.emptyMap = emptyMap;
     return this;
   }
@@ -276,22 +262,19 @@ public class AdditionalPropertiesClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "an object with no declared properties and no undeclared properties, hence it's an empty map.")
-  @JsonProperty(JSON_PROPERTY_EMPTY_MAP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Object getEmptyMap() {
     return emptyMap;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_EMPTY_MAP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEmptyMap(Object emptyMap) {
     this.emptyMap = emptyMap;
   }
 
 
   public AdditionalPropertiesClass mapWithUndeclaredPropertiesString(Map<String, String> mapWithUndeclaredPropertiesString) {
+    
     this.mapWithUndeclaredPropertiesString = mapWithUndeclaredPropertiesString;
     return this;
   }
@@ -310,24 +293,53 @@ public class AdditionalPropertiesClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_STRING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Map<String, String> getMapWithUndeclaredPropertiesString() {
     return mapWithUndeclaredPropertiesString;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MAP_WITH_UNDECLARED_PROPERTIES_STRING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMapWithUndeclaredPropertiesString(Map<String, String> mapWithUndeclaredPropertiesString) {
     this.mapWithUndeclaredPropertiesString = mapWithUndeclaredPropertiesString;
   }
 
+  /**
+   * A container for additional, undeclared properties.
+   * This is a holder for any undeclared properties as specified with
+   * the 'additionalProperties' keyword in the OAS document.
+   */
+  private Map<String, Object> additionalProperties;
 
   /**
-   * Return true if this AdditionalPropertiesClass object is equal to o.
+   * Set the additional (undeclared) property with the specified name and value.
+   * If the property does not already exist, create it otherwise replace it.
    */
+  public AdditionalPropertiesClass putAdditionalProperty(String key, Object value) {
+    if (this.additionalProperties == null) {
+        this.additionalProperties = new HashMap<String, Object>();
+    }
+    this.additionalProperties.put(key, value);
+    return this;
+  }
+
+  /**
+   * Return the additional (undeclared) property.
+   */
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  /**
+   * Return the additional (undeclared) property with the specified name.
+   */
+  public Object getAdditionalProperty(String key) {
+    if (this.additionalProperties == null) {
+        return null;
+    }
+    return this.additionalProperties.get(key);
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -339,12 +351,13 @@ public class AdditionalPropertiesClass {
     AdditionalPropertiesClass additionalPropertiesClass = (AdditionalPropertiesClass) o;
     return Objects.equals(this.mapProperty, additionalPropertiesClass.mapProperty) &&
         Objects.equals(this.mapOfMapProperty, additionalPropertiesClass.mapOfMapProperty) &&
-        equalsNullable(this.anytype1, additionalPropertiesClass.anytype1) &&
+        Objects.equals(this.anytype1, additionalPropertiesClass.anytype1) &&
         Objects.equals(this.mapWithUndeclaredPropertiesAnytype1, additionalPropertiesClass.mapWithUndeclaredPropertiesAnytype1) &&
         Objects.equals(this.mapWithUndeclaredPropertiesAnytype2, additionalPropertiesClass.mapWithUndeclaredPropertiesAnytype2) &&
         Objects.equals(this.mapWithUndeclaredPropertiesAnytype3, additionalPropertiesClass.mapWithUndeclaredPropertiesAnytype3) &&
         Objects.equals(this.emptyMap, additionalPropertiesClass.emptyMap) &&
-        Objects.equals(this.mapWithUndeclaredPropertiesString, additionalPropertiesClass.mapWithUndeclaredPropertiesString);
+        Objects.equals(this.mapWithUndeclaredPropertiesString, additionalPropertiesClass.mapWithUndeclaredPropertiesString)&&
+        Objects.equals(this.additionalProperties, additionalPropertiesClass.additionalProperties);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -353,7 +366,7 @@ public class AdditionalPropertiesClass {
 
   @Override
   public int hashCode() {
-    return Objects.hash(mapProperty, mapOfMapProperty, hashCodeNullable(anytype1), mapWithUndeclaredPropertiesAnytype1, mapWithUndeclaredPropertiesAnytype2, mapWithUndeclaredPropertiesAnytype3, emptyMap, mapWithUndeclaredPropertiesString);
+    return Objects.hash(mapProperty, mapOfMapProperty, anytype1, mapWithUndeclaredPropertiesAnytype1, mapWithUndeclaredPropertiesAnytype2, mapWithUndeclaredPropertiesAnytype3, emptyMap, mapWithUndeclaredPropertiesString, additionalProperties);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -375,6 +388,7 @@ public class AdditionalPropertiesClass {
     sb.append("    mapWithUndeclaredPropertiesAnytype3: ").append(toIndentedString(mapWithUndeclaredPropertiesAnytype3)).append("\n");
     sb.append("    emptyMap: ").append(toIndentedString(emptyMap)).append("\n");
     sb.append("    mapWithUndeclaredPropertiesString: ").append(toIndentedString(mapWithUndeclaredPropertiesString)).append("\n");
+    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -390,5 +404,124 @@ public class AdditionalPropertiesClass {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("map_property");
+    openapiFields.add("map_of_map_property");
+    openapiFields.add("anytype_1");
+    openapiFields.add("map_with_undeclared_properties_anytype_1");
+    openapiFields.add("map_with_undeclared_properties_anytype_2");
+    openapiFields.add("map_with_undeclared_properties_anytype_3");
+    openapiFields.add("empty_map");
+    openapiFields.add("map_with_undeclared_properties_string");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to AdditionalPropertiesClass
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!AdditionalPropertiesClass.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in AdditionalPropertiesClass is not found in the empty JSON string", AdditionalPropertiesClass.openapiRequiredFields.toString()));
+        }
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!AdditionalPropertiesClass.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'AdditionalPropertiesClass' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<AdditionalPropertiesClass> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(AdditionalPropertiesClass.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<AdditionalPropertiesClass>() {
+           @Override
+           public void write(JsonWriter out, AdditionalPropertiesClass value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             obj.remove("additionalProperties");
+             // serialize additonal properties
+             if (value.getAdditionalProperties() != null) {
+               for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
+                 if (entry.getValue() instanceof String)
+                   obj.addProperty(entry.getKey(), (String) entry.getValue());
+                 else if (entry.getValue() instanceof Number)
+                   obj.addProperty(entry.getKey(), (Number) entry.getValue());
+                 else if (entry.getValue() instanceof Boolean)
+                   obj.addProperty(entry.getKey(), (Boolean) entry.getValue());
+                 else if (entry.getValue() instanceof Character)
+                   obj.addProperty(entry.getKey(), (Character) entry.getValue());
+                 else {
+                   obj.add(entry.getKey(), gson.toJsonTree(entry.getValue()).getAsJsonObject());
+                 }
+               }
+             }
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public AdditionalPropertiesClass read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             // store additional fields in the deserialized instance
+             AdditionalPropertiesClass instance = thisAdapter.fromJsonTree(jsonObj);
+             for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+               if (!openapiFields.contains(entry.getKey())) {
+                 if (entry.getValue().isJsonPrimitive()) { // primitive type
+                   if (entry.getValue().getAsJsonPrimitive().isString())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsString());
+                   else if (entry.getValue().getAsJsonPrimitive().isNumber())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsNumber());
+                   else if (entry.getValue().getAsJsonPrimitive().isBoolean())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsBoolean());
+                   else
+                     throw new IllegalArgumentException(String.format("The field `%s` has unknown primitive type. Value: %s", entry.getKey(), entry.getValue().toString()));
+                 } else if (entry.getValue().isJsonArray()) {
+                     instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), List.class));
+                 } else { // JSON object
+                     instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), HashMap.class));
+                 }
+               }
+             }
+             return instance;
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of AdditionalPropertiesClass given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of AdditionalPropertiesClass
+  * @throws IOException if the JSON string is invalid with respect to AdditionalPropertiesClass
+  */
+  public static AdditionalPropertiesClass fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, AdditionalPropertiesClass.class);
+  }
+
+ /**
+  * Convert an instance of AdditionalPropertiesClass to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

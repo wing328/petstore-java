@@ -13,10 +13,10 @@
 
 package org.openapitools.client.model;
 
-
-import org.junit.jupiter.api.Assertions;
+import com.google.gson.annotations.SerializedName;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
 
 /**
  * Model tests for OuterEnumDefaultValue

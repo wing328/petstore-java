@@ -15,18 +15,18 @@ package org.openapitools.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.openapitools.client.JSON;
+import com.google.gson.annotations.SerializedName;
 
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.io.IOException;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
 /**
  * Gets or Sets OuterEnumDefaultValue
  */
+@JsonAdapter(OuterEnumDefaultValue.Adapter.class)
 public enum OuterEnumDefaultValue {
   
   PLACED("placed"),
@@ -41,7 +41,6 @@ public enum OuterEnumDefaultValue {
     this.value = value;
   }
 
-  @JsonValue
   public String getValue() {
     return value;
   }
@@ -51,7 +50,6 @@ public enum OuterEnumDefaultValue {
     return String.valueOf(value);
   }
 
-  @JsonCreator
   public static OuterEnumDefaultValue fromValue(String value) {
     for (OuterEnumDefaultValue b : OuterEnumDefaultValue.values()) {
       if (b.value.equals(value)) {
@@ -59,6 +57,19 @@ public enum OuterEnumDefaultValue {
       }
     }
     throw new IllegalArgumentException("Unexpected value '" + value + "'");
+  }
+
+  public static class Adapter extends TypeAdapter<OuterEnumDefaultValue> {
+    @Override
+    public void write(final JsonWriter jsonWriter, final OuterEnumDefaultValue enumeration) throws IOException {
+      jsonWriter.value(enumeration.getValue());
+    }
+
+    @Override
+    public OuterEnumDefaultValue read(final JsonReader jsonReader) throws IOException {
+      String value = jsonReader.nextString();
+      return OuterEnumDefaultValue.fromValue(value);
+    }
   }
 }
 

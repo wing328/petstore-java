@@ -13,12 +13,9 @@
 
 package org.openapitools.client.api;
 
-import org.openapitools.client.*;
-import org.openapitools.client.auth.*;
+import org.openapitools.client.ApiException;
 import java.time.OffsetDateTime;
 import org.openapitools.client.model.User;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +27,7 @@ import java.util.Map;
 /**
  * API tests for UserApi
  */
+@Disabled
 public class UserApiTest {
 
     private final UserApi api = new UserApi();
@@ -43,8 +41,8 @@ public class UserApiTest {
      */
     @Test
     public void createUserTest() throws ApiException {
-        //User user = null;
-        //api.createUser(user);
+        User user = null;
+        api.createUser(user);
         // TODO: test validations
     }
 
@@ -57,8 +55,8 @@ public class UserApiTest {
      */
     @Test
     public void createUsersWithArrayInputTest() throws ApiException {
-        //List<User> user = null;
-        //api.createUsersWithArrayInput(user);
+        List<User> user = null;
+        api.createUsersWithArrayInput(user);
         // TODO: test validations
     }
 
@@ -71,8 +69,8 @@ public class UserApiTest {
      */
     @Test
     public void createUsersWithListInputTest() throws ApiException {
-        //List<User> user = null;
-        //api.createUsersWithListInput(user);
+        List<User> user = null;
+        api.createUsersWithListInput(user);
         // TODO: test validations
     }
 
@@ -85,8 +83,8 @@ public class UserApiTest {
      */
     @Test
     public void deleteUserTest() throws ApiException {
-        //String username = null;
-        //api.deleteUser(username);
+        String username = null;
+        api.deleteUser(username);
         // TODO: test validations
     }
 
@@ -99,8 +97,8 @@ public class UserApiTest {
      */
     @Test
     public void getUserByNameTest() throws ApiException {
-        //String username = null;
-        //User response = api.getUserByName(username);
+        String username = null;
+        User response = api.getUserByName(username);
         // TODO: test validations
     }
 
@@ -113,9 +111,9 @@ public class UserApiTest {
      */
     @Test
     public void loginUserTest() throws ApiException {
-        //String username = null;
-        //String password = null;
-        //String response = api.loginUser(username, password);
+        String username = null;
+        String password = null;
+        String response = api.loginUser(username, password);
         // TODO: test validations
     }
 
@@ -128,7 +126,7 @@ public class UserApiTest {
      */
     @Test
     public void logoutUserTest() throws ApiException {
-        //api.logoutUser();
+        api.logoutUser();
         // TODO: test validations
     }
 
@@ -141,9 +139,9 @@ public class UserApiTest {
      */
     @Test
     public void updateUserTest() throws ApiException {
-        //String username = null;
-        //User user = null;
-        //api.updateUser(username, user);
+        String username = null;
+        User user = null;
+        api.updateUser(username, user);
         // TODO: test validations
     }
 

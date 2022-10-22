@@ -13,13 +13,10 @@
 
 package org.openapitools.client.api;
 
-import org.openapitools.client.*;
-import org.openapitools.client.auth.*;
+import org.openapitools.client.ApiException;
 import java.io.File;
 import org.openapitools.client.model.ModelApiResponse;
 import org.openapitools.client.model.Pet;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +28,7 @@ import java.util.Map;
 /**
  * API tests for PetApi
  */
+@Disabled
 public class PetApiTest {
 
     private final PetApi api = new PetApi();
@@ -44,8 +42,8 @@ public class PetApiTest {
      */
     @Test
     public void addPetTest() throws ApiException {
-        //Pet pet = null;
-        //api.addPet(pet);
+        Pet pet = null;
+        api.addPet(pet);
         // TODO: test validations
     }
 
@@ -58,9 +56,9 @@ public class PetApiTest {
      */
     @Test
     public void deletePetTest() throws ApiException {
-        //Long petId = null;
-        //String apiKey = null;
-        //api.deletePet(petId, apiKey);
+        Long petId = null;
+        String apiKey = null;
+        api.deletePet(petId, apiKey);
         // TODO: test validations
     }
 
@@ -73,8 +71,8 @@ public class PetApiTest {
      */
     @Test
     public void findPetsByStatusTest() throws ApiException {
-        //List<String> status = null;
-        //List<Pet> response = api.findPetsByStatus(status);
+        List<String> status = null;
+        List<Pet> response = api.findPetsByStatus(status);
         // TODO: test validations
     }
 
@@ -87,8 +85,8 @@ public class PetApiTest {
      */
     @Test
     public void findPetsByTagsTest() throws ApiException {
-        //List<String> tags = null;
-        //List<Pet> response = api.findPetsByTags(tags);
+        List<String> tags = null;
+        List<Pet> response = api.findPetsByTags(tags);
         // TODO: test validations
     }
 
@@ -101,8 +99,8 @@ public class PetApiTest {
      */
     @Test
     public void getPetByIdTest() throws ApiException {
-        //Long petId = null;
-        //Pet response = api.getPetById(petId);
+        Long petId = null;
+        Pet response = api.getPetById(petId);
         // TODO: test validations
     }
 
@@ -115,8 +113,8 @@ public class PetApiTest {
      */
     @Test
     public void updatePetTest() throws ApiException {
-        //Pet pet = null;
-        //api.updatePet(pet);
+        Pet pet = null;
+        api.updatePet(pet);
         // TODO: test validations
     }
 
@@ -129,10 +127,10 @@ public class PetApiTest {
      */
     @Test
     public void updatePetWithFormTest() throws ApiException {
-        //Long petId = null;
-        //String name = null;
-        //String status = null;
-        //api.updatePetWithForm(petId, name, status);
+        Long petId = null;
+        String name = null;
+        String status = null;
+        api.updatePetWithForm(petId, name, status);
         // TODO: test validations
     }
 
@@ -145,10 +143,10 @@ public class PetApiTest {
      */
     @Test
     public void uploadFileTest() throws ApiException {
-        //Long petId = null;
-        //String additionalMetadata = null;
-        //File _file = null;
-        //ModelApiResponse response = api.uploadFile(petId, additionalMetadata, _file);
+        Long petId = null;
+        String additionalMetadata = null;
+        File _file = null;
+        ModelApiResponse response = api.uploadFile(petId, additionalMetadata, _file);
         // TODO: test validations
     }
 
@@ -161,10 +159,10 @@ public class PetApiTest {
      */
     @Test
     public void uploadFileWithRequiredFileTest() throws ApiException {
-        //Long petId = null;
-        //File requiredFile = null;
-        //String additionalMetadata = null;
-        //ModelApiResponse response = api.uploadFileWithRequiredFile(petId, requiredFile, additionalMetadata);
+        Long petId = null;
+        File requiredFile = null;
+        String additionalMetadata = null;
+        ModelApiResponse response = api.uploadFileWithRequiredFile(petId, requiredFile, additionalMetadata);
         // TODO: test validations
     }
 

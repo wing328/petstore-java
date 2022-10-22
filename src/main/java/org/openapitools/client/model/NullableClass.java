@@ -13,21 +13,16 @@
 
 package org.openapitools.client.model;
 
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import java.util.Objects;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -36,73 +31,87 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.openapitools.jackson.nullable.JsonNullable;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.util.NoSuchElementException;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.openapitools.client.JSON;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.openapitools.client.JSON;
 
 /**
  * NullableClass
  */
-@JsonPropertyOrder({
-  NullableClass.JSON_PROPERTY_INTEGER_PROP,
-  NullableClass.JSON_PROPERTY_NUMBER_PROP,
-  NullableClass.JSON_PROPERTY_BOOLEAN_PROP,
-  NullableClass.JSON_PROPERTY_STRING_PROP,
-  NullableClass.JSON_PROPERTY_DATE_PROP,
-  NullableClass.JSON_PROPERTY_DATETIME_PROP,
-  NullableClass.JSON_PROPERTY_ARRAY_NULLABLE_PROP,
-  NullableClass.JSON_PROPERTY_ARRAY_AND_ITEMS_NULLABLE_PROP,
-  NullableClass.JSON_PROPERTY_ARRAY_ITEMS_NULLABLE,
-  NullableClass.JSON_PROPERTY_OBJECT_NULLABLE_PROP,
-  NullableClass.JSON_PROPERTY_OBJECT_AND_ITEMS_NULLABLE_PROP,
-  NullableClass.JSON_PROPERTY_OBJECT_ITEMS_NULLABLE
-})
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class NullableClass {
-  public static final String JSON_PROPERTY_INTEGER_PROP = "integer_prop";
-  private JsonNullable<Integer> integerProp = JsonNullable.<Integer>undefined();
+  public static final String SERIALIZED_NAME_INTEGER_PROP = "integer_prop";
+  @SerializedName(SERIALIZED_NAME_INTEGER_PROP)
+  private Integer integerProp;
 
-  public static final String JSON_PROPERTY_NUMBER_PROP = "number_prop";
-  private JsonNullable<BigDecimal> numberProp = JsonNullable.<BigDecimal>undefined();
+  public static final String SERIALIZED_NAME_NUMBER_PROP = "number_prop";
+  @SerializedName(SERIALIZED_NAME_NUMBER_PROP)
+  private BigDecimal numberProp;
 
-  public static final String JSON_PROPERTY_BOOLEAN_PROP = "boolean_prop";
-  private JsonNullable<Boolean> booleanProp = JsonNullable.<Boolean>undefined();
+  public static final String SERIALIZED_NAME_BOOLEAN_PROP = "boolean_prop";
+  @SerializedName(SERIALIZED_NAME_BOOLEAN_PROP)
+  private Boolean booleanProp;
 
-  public static final String JSON_PROPERTY_STRING_PROP = "string_prop";
-  private JsonNullable<String> stringProp = JsonNullable.<String>undefined();
+  public static final String SERIALIZED_NAME_STRING_PROP = "string_prop";
+  @SerializedName(SERIALIZED_NAME_STRING_PROP)
+  private String stringProp;
 
-  public static final String JSON_PROPERTY_DATE_PROP = "date_prop";
-  private JsonNullable<LocalDate> dateProp = JsonNullable.<LocalDate>undefined();
+  public static final String SERIALIZED_NAME_DATE_PROP = "date_prop";
+  @SerializedName(SERIALIZED_NAME_DATE_PROP)
+  private LocalDate dateProp;
 
-  public static final String JSON_PROPERTY_DATETIME_PROP = "datetime_prop";
-  private JsonNullable<OffsetDateTime> datetimeProp = JsonNullable.<OffsetDateTime>undefined();
+  public static final String SERIALIZED_NAME_DATETIME_PROP = "datetime_prop";
+  @SerializedName(SERIALIZED_NAME_DATETIME_PROP)
+  private OffsetDateTime datetimeProp;
 
-  public static final String JSON_PROPERTY_ARRAY_NULLABLE_PROP = "array_nullable_prop";
-  private JsonNullable<List<Object>> arrayNullableProp = JsonNullable.<List<Object>>undefined();
+  public static final String SERIALIZED_NAME_ARRAY_NULLABLE_PROP = "array_nullable_prop";
+  @SerializedName(SERIALIZED_NAME_ARRAY_NULLABLE_PROP)
+  private List<Object> arrayNullableProp = null;
 
-  public static final String JSON_PROPERTY_ARRAY_AND_ITEMS_NULLABLE_PROP = "array_and_items_nullable_prop";
-  private JsonNullable<List<Object>> arrayAndItemsNullableProp = JsonNullable.<List<Object>>undefined();
+  public static final String SERIALIZED_NAME_ARRAY_AND_ITEMS_NULLABLE_PROP = "array_and_items_nullable_prop";
+  @SerializedName(SERIALIZED_NAME_ARRAY_AND_ITEMS_NULLABLE_PROP)
+  private List<Object> arrayAndItemsNullableProp = null;
 
-  public static final String JSON_PROPERTY_ARRAY_ITEMS_NULLABLE = "array_items_nullable";
+  public static final String SERIALIZED_NAME_ARRAY_ITEMS_NULLABLE = "array_items_nullable";
+  @SerializedName(SERIALIZED_NAME_ARRAY_ITEMS_NULLABLE)
   private List<Object> arrayItemsNullable = null;
 
-  public static final String JSON_PROPERTY_OBJECT_NULLABLE_PROP = "object_nullable_prop";
-  private JsonNullable<Map<String, Object>> objectNullableProp = JsonNullable.<Map<String, Object>>undefined();
+  public static final String SERIALIZED_NAME_OBJECT_NULLABLE_PROP = "object_nullable_prop";
+  @SerializedName(SERIALIZED_NAME_OBJECT_NULLABLE_PROP)
+  private Map<String, Object> objectNullableProp = null;
 
-  public static final String JSON_PROPERTY_OBJECT_AND_ITEMS_NULLABLE_PROP = "object_and_items_nullable_prop";
-  private JsonNullable<Map<String, Object>> objectAndItemsNullableProp = JsonNullable.<Map<String, Object>>undefined();
+  public static final String SERIALIZED_NAME_OBJECT_AND_ITEMS_NULLABLE_PROP = "object_and_items_nullable_prop";
+  @SerializedName(SERIALIZED_NAME_OBJECT_AND_ITEMS_NULLABLE_PROP)
+  private Map<String, Object> objectAndItemsNullableProp = null;
 
-  public static final String JSON_PROPERTY_OBJECT_ITEMS_NULLABLE = "object_items_nullable";
+  public static final String SERIALIZED_NAME_OBJECT_ITEMS_NULLABLE = "object_items_nullable";
+  @SerializedName(SERIALIZED_NAME_OBJECT_ITEMS_NULLABLE)
   private Map<String, Object> objectItemsNullable = null;
 
-  public NullableClass() { 
+  public NullableClass() {
   }
 
   public NullableClass integerProp(Integer integerProp) {
-    this.integerProp = JsonNullable.<Integer>of(integerProp);
+    
+    this.integerProp = integerProp;
     return this;
   }
 
@@ -112,31 +121,20 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public Integer getIntegerProp() {
-        return integerProp.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_INTEGER_PROP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<Integer> getIntegerProp_JsonNullable() {
     return integerProp;
   }
-  
-  @JsonProperty(JSON_PROPERTY_INTEGER_PROP)
-  public void setIntegerProp_JsonNullable(JsonNullable<Integer> integerProp) {
-    this.integerProp = integerProp;
-  }
+
 
   public void setIntegerProp(Integer integerProp) {
-    this.integerProp = JsonNullable.<Integer>of(integerProp);
+    this.integerProp = integerProp;
   }
 
 
   public NullableClass numberProp(BigDecimal numberProp) {
-    this.numberProp = JsonNullable.<BigDecimal>of(numberProp);
+    
+    this.numberProp = numberProp;
     return this;
   }
 
@@ -146,31 +144,20 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public BigDecimal getNumberProp() {
-        return numberProp.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_NUMBER_PROP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<BigDecimal> getNumberProp_JsonNullable() {
     return numberProp;
   }
-  
-  @JsonProperty(JSON_PROPERTY_NUMBER_PROP)
-  public void setNumberProp_JsonNullable(JsonNullable<BigDecimal> numberProp) {
-    this.numberProp = numberProp;
-  }
+
 
   public void setNumberProp(BigDecimal numberProp) {
-    this.numberProp = JsonNullable.<BigDecimal>of(numberProp);
+    this.numberProp = numberProp;
   }
 
 
   public NullableClass booleanProp(Boolean booleanProp) {
-    this.booleanProp = JsonNullable.<Boolean>of(booleanProp);
+    
+    this.booleanProp = booleanProp;
     return this;
   }
 
@@ -180,31 +167,20 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public Boolean getBooleanProp() {
-        return booleanProp.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_BOOLEAN_PROP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<Boolean> getBooleanProp_JsonNullable() {
     return booleanProp;
   }
-  
-  @JsonProperty(JSON_PROPERTY_BOOLEAN_PROP)
-  public void setBooleanProp_JsonNullable(JsonNullable<Boolean> booleanProp) {
-    this.booleanProp = booleanProp;
-  }
+
 
   public void setBooleanProp(Boolean booleanProp) {
-    this.booleanProp = JsonNullable.<Boolean>of(booleanProp);
+    this.booleanProp = booleanProp;
   }
 
 
   public NullableClass stringProp(String stringProp) {
-    this.stringProp = JsonNullable.<String>of(stringProp);
+    
+    this.stringProp = stringProp;
     return this;
   }
 
@@ -214,31 +190,20 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public String getStringProp() {
-        return stringProp.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_STRING_PROP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<String> getStringProp_JsonNullable() {
     return stringProp;
   }
-  
-  @JsonProperty(JSON_PROPERTY_STRING_PROP)
-  public void setStringProp_JsonNullable(JsonNullable<String> stringProp) {
-    this.stringProp = stringProp;
-  }
+
 
   public void setStringProp(String stringProp) {
-    this.stringProp = JsonNullable.<String>of(stringProp);
+    this.stringProp = stringProp;
   }
 
 
   public NullableClass dateProp(LocalDate dateProp) {
-    this.dateProp = JsonNullable.<LocalDate>of(dateProp);
+    
+    this.dateProp = dateProp;
     return this;
   }
 
@@ -248,31 +213,20 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public LocalDate getDateProp() {
-        return dateProp.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_DATE_PROP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<LocalDate> getDateProp_JsonNullable() {
     return dateProp;
   }
-  
-  @JsonProperty(JSON_PROPERTY_DATE_PROP)
-  public void setDateProp_JsonNullable(JsonNullable<LocalDate> dateProp) {
-    this.dateProp = dateProp;
-  }
+
 
   public void setDateProp(LocalDate dateProp) {
-    this.dateProp = JsonNullable.<LocalDate>of(dateProp);
+    this.dateProp = dateProp;
   }
 
 
   public NullableClass datetimeProp(OffsetDateTime datetimeProp) {
-    this.datetimeProp = JsonNullable.<OffsetDateTime>of(datetimeProp);
+    
+    this.datetimeProp = datetimeProp;
     return this;
   }
 
@@ -282,43 +236,28 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public OffsetDateTime getDatetimeProp() {
-        return datetimeProp.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_DATETIME_PROP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<OffsetDateTime> getDatetimeProp_JsonNullable() {
     return datetimeProp;
   }
-  
-  @JsonProperty(JSON_PROPERTY_DATETIME_PROP)
-  public void setDatetimeProp_JsonNullable(JsonNullable<OffsetDateTime> datetimeProp) {
-    this.datetimeProp = datetimeProp;
-  }
+
 
   public void setDatetimeProp(OffsetDateTime datetimeProp) {
-    this.datetimeProp = JsonNullable.<OffsetDateTime>of(datetimeProp);
+    this.datetimeProp = datetimeProp;
   }
 
 
   public NullableClass arrayNullableProp(List<Object> arrayNullableProp) {
-    this.arrayNullableProp = JsonNullable.<List<Object>>of(arrayNullableProp);
+    
+    this.arrayNullableProp = arrayNullableProp;
     return this;
   }
 
   public NullableClass addArrayNullablePropItem(Object arrayNullablePropItem) {
-    if (this.arrayNullableProp == null || !this.arrayNullableProp.isPresent()) {
-      this.arrayNullableProp = JsonNullable.<List<Object>>of(new ArrayList<>());
+    if (this.arrayNullableProp == null) {
+      this.arrayNullableProp = new ArrayList<>();
     }
-    try {
-      this.arrayNullableProp.get().add(arrayNullablePropItem);
-    } catch (java.util.NoSuchElementException e) {
-      // this can never happen, as we make sure above that the value is present
-    }
+    this.arrayNullableProp.add(arrayNullablePropItem);
     return this;
   }
 
@@ -328,43 +267,28 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public List<Object> getArrayNullableProp() {
-        return arrayNullableProp.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_ARRAY_NULLABLE_PROP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<List<Object>> getArrayNullableProp_JsonNullable() {
     return arrayNullableProp;
   }
-  
-  @JsonProperty(JSON_PROPERTY_ARRAY_NULLABLE_PROP)
-  public void setArrayNullableProp_JsonNullable(JsonNullable<List<Object>> arrayNullableProp) {
-    this.arrayNullableProp = arrayNullableProp;
-  }
+
 
   public void setArrayNullableProp(List<Object> arrayNullableProp) {
-    this.arrayNullableProp = JsonNullable.<List<Object>>of(arrayNullableProp);
+    this.arrayNullableProp = arrayNullableProp;
   }
 
 
   public NullableClass arrayAndItemsNullableProp(List<Object> arrayAndItemsNullableProp) {
-    this.arrayAndItemsNullableProp = JsonNullable.<List<Object>>of(arrayAndItemsNullableProp);
+    
+    this.arrayAndItemsNullableProp = arrayAndItemsNullableProp;
     return this;
   }
 
   public NullableClass addArrayAndItemsNullablePropItem(Object arrayAndItemsNullablePropItem) {
-    if (this.arrayAndItemsNullableProp == null || !this.arrayAndItemsNullableProp.isPresent()) {
-      this.arrayAndItemsNullableProp = JsonNullable.<List<Object>>of(new ArrayList<>());
+    if (this.arrayAndItemsNullableProp == null) {
+      this.arrayAndItemsNullableProp = new ArrayList<>();
     }
-    try {
-      this.arrayAndItemsNullableProp.get().add(arrayAndItemsNullablePropItem);
-    } catch (java.util.NoSuchElementException e) {
-      // this can never happen, as we make sure above that the value is present
-    }
+    this.arrayAndItemsNullableProp.add(arrayAndItemsNullablePropItem);
     return this;
   }
 
@@ -374,30 +298,19 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public List<Object> getArrayAndItemsNullableProp() {
-        return arrayAndItemsNullableProp.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_ARRAY_AND_ITEMS_NULLABLE_PROP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<List<Object>> getArrayAndItemsNullableProp_JsonNullable() {
     return arrayAndItemsNullableProp;
   }
-  
-  @JsonProperty(JSON_PROPERTY_ARRAY_AND_ITEMS_NULLABLE_PROP)
-  public void setArrayAndItemsNullableProp_JsonNullable(JsonNullable<List<Object>> arrayAndItemsNullableProp) {
-    this.arrayAndItemsNullableProp = arrayAndItemsNullableProp;
-  }
+
 
   public void setArrayAndItemsNullableProp(List<Object> arrayAndItemsNullableProp) {
-    this.arrayAndItemsNullableProp = JsonNullable.<List<Object>>of(arrayAndItemsNullableProp);
+    this.arrayAndItemsNullableProp = arrayAndItemsNullableProp;
   }
 
 
   public NullableClass arrayItemsNullable(List<Object> arrayItemsNullable) {
+    
     this.arrayItemsNullable = arrayItemsNullable;
     return this;
   }
@@ -416,35 +329,28 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_ARRAY_ITEMS_NULLABLE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<Object> getArrayItemsNullable() {
     return arrayItemsNullable;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ARRAY_ITEMS_NULLABLE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setArrayItemsNullable(List<Object> arrayItemsNullable) {
     this.arrayItemsNullable = arrayItemsNullable;
   }
 
 
   public NullableClass objectNullableProp(Map<String, Object> objectNullableProp) {
-    this.objectNullableProp = JsonNullable.<Map<String, Object>>of(objectNullableProp);
+    
+    this.objectNullableProp = objectNullableProp;
     return this;
   }
 
   public NullableClass putObjectNullablePropItem(String key, Object objectNullablePropItem) {
-    if (this.objectNullableProp == null || !this.objectNullableProp.isPresent()) {
-      this.objectNullableProp = JsonNullable.<Map<String, Object>>of(new HashMap<>());
+    if (this.objectNullableProp == null) {
+      this.objectNullableProp = new HashMap<>();
     }
-    try {
-      this.objectNullableProp.get().put(key, objectNullablePropItem);
-    } catch (java.util.NoSuchElementException e) {
-      // this can never happen, as we make sure above that the value is present
-    }
+    this.objectNullableProp.put(key, objectNullablePropItem);
     return this;
   }
 
@@ -454,43 +360,28 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public Map<String, Object> getObjectNullableProp() {
-        return objectNullableProp.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_OBJECT_NULLABLE_PROP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<Map<String, Object>> getObjectNullableProp_JsonNullable() {
     return objectNullableProp;
   }
-  
-  @JsonProperty(JSON_PROPERTY_OBJECT_NULLABLE_PROP)
-  public void setObjectNullableProp_JsonNullable(JsonNullable<Map<String, Object>> objectNullableProp) {
-    this.objectNullableProp = objectNullableProp;
-  }
+
 
   public void setObjectNullableProp(Map<String, Object> objectNullableProp) {
-    this.objectNullableProp = JsonNullable.<Map<String, Object>>of(objectNullableProp);
+    this.objectNullableProp = objectNullableProp;
   }
 
 
   public NullableClass objectAndItemsNullableProp(Map<String, Object> objectAndItemsNullableProp) {
-    this.objectAndItemsNullableProp = JsonNullable.<Map<String, Object>>of(objectAndItemsNullableProp);
+    
+    this.objectAndItemsNullableProp = objectAndItemsNullableProp;
     return this;
   }
 
   public NullableClass putObjectAndItemsNullablePropItem(String key, Object objectAndItemsNullablePropItem) {
-    if (this.objectAndItemsNullableProp == null || !this.objectAndItemsNullableProp.isPresent()) {
-      this.objectAndItemsNullableProp = JsonNullable.<Map<String, Object>>of(new HashMap<>());
+    if (this.objectAndItemsNullableProp == null) {
+      this.objectAndItemsNullableProp = new HashMap<>();
     }
-    try {
-      this.objectAndItemsNullableProp.get().put(key, objectAndItemsNullablePropItem);
-    } catch (java.util.NoSuchElementException e) {
-      // this can never happen, as we make sure above that the value is present
-    }
+    this.objectAndItemsNullableProp.put(key, objectAndItemsNullablePropItem);
     return this;
   }
 
@@ -500,30 +391,19 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonIgnore
 
   public Map<String, Object> getObjectAndItemsNullableProp() {
-        return objectAndItemsNullableProp.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_OBJECT_AND_ITEMS_NULLABLE_PROP)
-  @JsonInclude(content = JsonInclude.Include.ALWAYS, value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<Map<String, Object>> getObjectAndItemsNullableProp_JsonNullable() {
     return objectAndItemsNullableProp;
   }
-  
-  @JsonProperty(JSON_PROPERTY_OBJECT_AND_ITEMS_NULLABLE_PROP)
-  public void setObjectAndItemsNullableProp_JsonNullable(JsonNullable<Map<String, Object>> objectAndItemsNullableProp) {
-    this.objectAndItemsNullableProp = objectAndItemsNullableProp;
-  }
+
 
   public void setObjectAndItemsNullableProp(Map<String, Object> objectAndItemsNullableProp) {
-    this.objectAndItemsNullableProp = JsonNullable.<Map<String, Object>>of(objectAndItemsNullableProp);
+    this.objectAndItemsNullableProp = objectAndItemsNullableProp;
   }
 
 
   public NullableClass objectItemsNullable(Map<String, Object> objectItemsNullable) {
+    
     this.objectItemsNullable = objectItemsNullable;
     return this;
   }
@@ -542,61 +422,18 @@ public class NullableClass {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_OBJECT_ITEMS_NULLABLE)
-  @JsonInclude(content = JsonInclude.Include.ALWAYS, value = JsonInclude.Include.USE_DEFAULTS)
 
   public Map<String, Object> getObjectItemsNullable() {
     return objectItemsNullable;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_OBJECT_ITEMS_NULLABLE)
-  @JsonInclude(content = JsonInclude.Include.ALWAYS, value = JsonInclude.Include.USE_DEFAULTS)
   public void setObjectItemsNullable(Map<String, Object> objectItemsNullable) {
     this.objectItemsNullable = objectItemsNullable;
   }
 
-  /**
-   * A container for additional, undeclared properties.
-   * This is a holder for any undeclared properties as specified with
-   * the 'additionalProperties' keyword in the OAS document.
-   */
-  private Map<String, Object> additionalProperties;
 
-  /**
-   * Set the additional (undeclared) property with the specified name and value.
-   * If the property does not already exist, create it otherwise replace it.
-   */
-  @JsonAnySetter
-  public NullableClass putAdditionalProperty(String key, Object value) {
-    if (this.additionalProperties == null) {
-        this.additionalProperties = new HashMap<String, Object>();
-    }
-    this.additionalProperties.put(key, value);
-    return this;
-  }
 
-  /**
-   * Return the additional (undeclared) property.
-   */
-  @JsonAnyGetter
-  public Map<String, Object> getAdditionalProperties() {
-    return additionalProperties;
-  }
-
-  /**
-   * Return the additional (undeclared) property with the specified name.
-   */
-  public Object getAdditionalProperty(String key) {
-    if (this.additionalProperties == null) {
-        return null;
-    }
-    return this.additionalProperties.get(key);
-  }
-
-  /**
-   * Return true if this NullableClass object is equal to o.
-   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -606,19 +443,18 @@ public class NullableClass {
       return false;
     }
     NullableClass nullableClass = (NullableClass) o;
-    return equalsNullable(this.integerProp, nullableClass.integerProp) &&
-        equalsNullable(this.numberProp, nullableClass.numberProp) &&
-        equalsNullable(this.booleanProp, nullableClass.booleanProp) &&
-        equalsNullable(this.stringProp, nullableClass.stringProp) &&
-        equalsNullable(this.dateProp, nullableClass.dateProp) &&
-        equalsNullable(this.datetimeProp, nullableClass.datetimeProp) &&
-        equalsNullable(this.arrayNullableProp, nullableClass.arrayNullableProp) &&
-        equalsNullable(this.arrayAndItemsNullableProp, nullableClass.arrayAndItemsNullableProp) &&
+    return Objects.equals(this.integerProp, nullableClass.integerProp) &&
+        Objects.equals(this.numberProp, nullableClass.numberProp) &&
+        Objects.equals(this.booleanProp, nullableClass.booleanProp) &&
+        Objects.equals(this.stringProp, nullableClass.stringProp) &&
+        Objects.equals(this.dateProp, nullableClass.dateProp) &&
+        Objects.equals(this.datetimeProp, nullableClass.datetimeProp) &&
+        Objects.equals(this.arrayNullableProp, nullableClass.arrayNullableProp) &&
+        Objects.equals(this.arrayAndItemsNullableProp, nullableClass.arrayAndItemsNullableProp) &&
         Objects.equals(this.arrayItemsNullable, nullableClass.arrayItemsNullable) &&
-        equalsNullable(this.objectNullableProp, nullableClass.objectNullableProp) &&
-        equalsNullable(this.objectAndItemsNullableProp, nullableClass.objectAndItemsNullableProp) &&
-        Objects.equals(this.objectItemsNullable, nullableClass.objectItemsNullable)&&
-        Objects.equals(this.additionalProperties, nullableClass.additionalProperties);
+        Objects.equals(this.objectNullableProp, nullableClass.objectNullableProp) &&
+        Objects.equals(this.objectAndItemsNullableProp, nullableClass.objectAndItemsNullableProp) &&
+        Objects.equals(this.objectItemsNullable, nullableClass.objectItemsNullable);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -627,7 +463,7 @@ public class NullableClass {
 
   @Override
   public int hashCode() {
-    return Objects.hash(hashCodeNullable(integerProp), hashCodeNullable(numberProp), hashCodeNullable(booleanProp), hashCodeNullable(stringProp), hashCodeNullable(dateProp), hashCodeNullable(datetimeProp), hashCodeNullable(arrayNullableProp), hashCodeNullable(arrayAndItemsNullableProp), arrayItemsNullable, hashCodeNullable(objectNullableProp), hashCodeNullable(objectAndItemsNullableProp), objectItemsNullable, additionalProperties);
+    return Objects.hash(integerProp, numberProp, booleanProp, stringProp, dateProp, datetimeProp, arrayNullableProp, arrayAndItemsNullableProp, arrayItemsNullable, objectNullableProp, objectAndItemsNullableProp, objectItemsNullable);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -653,7 +489,6 @@ public class NullableClass {
     sb.append("    objectNullableProp: ").append(toIndentedString(objectNullableProp)).append("\n");
     sb.append("    objectAndItemsNullableProp: ").append(toIndentedString(objectAndItemsNullableProp)).append("\n");
     sb.append("    objectItemsNullable: ").append(toIndentedString(objectItemsNullable)).append("\n");
-    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -669,5 +504,114 @@ public class NullableClass {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("integer_prop");
+    openapiFields.add("number_prop");
+    openapiFields.add("boolean_prop");
+    openapiFields.add("string_prop");
+    openapiFields.add("date_prop");
+    openapiFields.add("datetime_prop");
+    openapiFields.add("array_nullable_prop");
+    openapiFields.add("array_and_items_nullable_prop");
+    openapiFields.add("array_items_nullable");
+    openapiFields.add("object_nullable_prop");
+    openapiFields.add("object_and_items_nullable_prop");
+    openapiFields.add("object_items_nullable");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to NullableClass
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!NullableClass.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in NullableClass is not found in the empty JSON string", NullableClass.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!NullableClass.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `NullableClass` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("string_prop") != null && !jsonObj.get("string_prop").isJsonNull()) && !jsonObj.get("string_prop").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `string_prop` to be a primitive type in the JSON string but got `%s`", jsonObj.get("string_prop").toString()));
+      }
+      // ensure the json data is an array
+      if (!jsonObj.get("array_nullable_prop").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `array_nullable_prop` to be an array in the JSON string but got `%s`", jsonObj.get("array_nullable_prop").toString()));
+      }
+      // ensure the json data is an array
+      if (!jsonObj.get("array_and_items_nullable_prop").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `array_and_items_nullable_prop` to be an array in the JSON string but got `%s`", jsonObj.get("array_and_items_nullable_prop").toString()));
+      }
+      // ensure the json data is an array
+      if (!jsonObj.get("array_items_nullable").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `array_items_nullable` to be an array in the JSON string but got `%s`", jsonObj.get("array_items_nullable").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!NullableClass.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'NullableClass' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<NullableClass> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(NullableClass.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<NullableClass>() {
+           @Override
+           public void write(JsonWriter out, NullableClass value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public NullableClass read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of NullableClass given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of NullableClass
+  * @throws IOException if the JSON string is invalid with respect to NullableClass
+  */
+  public static NullableClass fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, NullableClass.class);
+  }
+
+ /**
+  * Convert an instance of NullableClass to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

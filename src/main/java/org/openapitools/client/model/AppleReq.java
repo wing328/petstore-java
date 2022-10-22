@@ -15,39 +15,54 @@ package org.openapitools.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.openapitools.client.JSON;
+import java.io.IOException;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.openapitools.client.JSON;
 
 /**
  * AppleReq
  */
-@JsonPropertyOrder({
-  AppleReq.JSON_PROPERTY_CULTIVAR,
-  AppleReq.JSON_PROPERTY_MEALY
-})
-@JsonTypeName("appleReq")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AppleReq {
-  public static final String JSON_PROPERTY_CULTIVAR = "cultivar";
+  public static final String SERIALIZED_NAME_CULTIVAR = "cultivar";
+  @SerializedName(SERIALIZED_NAME_CULTIVAR)
   private String cultivar;
 
-  public static final String JSON_PROPERTY_MEALY = "mealy";
+  public static final String SERIALIZED_NAME_MEALY = "mealy";
+  @SerializedName(SERIALIZED_NAME_MEALY)
   private Boolean mealy;
 
-  public AppleReq() { 
+  public AppleReq() {
   }
 
   public AppleReq cultivar(String cultivar) {
+    
     this.cultivar = cultivar;
     return this;
   }
@@ -58,22 +73,19 @@ public class AppleReq {
   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
-  @JsonProperty(JSON_PROPERTY_CULTIVAR)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
   public String getCultivar() {
     return cultivar;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CULTIVAR)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setCultivar(String cultivar) {
     this.cultivar = cultivar;
   }
 
 
   public AppleReq mealy(Boolean mealy) {
+    
     this.mealy = mealy;
     return this;
   }
@@ -84,24 +96,18 @@ public class AppleReq {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_MEALY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Boolean getMealy() {
     return mealy;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MEALY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMealy(Boolean mealy) {
     this.mealy = mealy;
   }
 
 
-  /**
-   * Return true if this appleReq object is equal to o.
-   */
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -141,5 +147,100 @@ public class AppleReq {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("cultivar");
+    openapiFields.add("mealy");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+    openapiRequiredFields.add("cultivar");
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to AppleReq
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (!AppleReq.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in AppleReq is not found in the empty JSON string", AppleReq.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!AppleReq.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `AppleReq` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+
+      // check to make sure all required properties/fields are present in the JSON string
+      for (String requiredField : AppleReq.openapiRequiredFields) {
+        if (jsonObj.get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
+        }
+      }
+      if (!jsonObj.get("cultivar").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `cultivar` to be a primitive type in the JSON string but got `%s`", jsonObj.get("cultivar").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!AppleReq.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'AppleReq' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<AppleReq> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(AppleReq.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<AppleReq>() {
+           @Override
+           public void write(JsonWriter out, AppleReq value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public AppleReq read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of AppleReq given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of AppleReq
+  * @throws IOException if the JSON string is invalid with respect to AppleReq
+  */
+  public static AppleReq fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, AppleReq.class);
+  }
+
+ /**
+  * Convert an instance of AppleReq to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

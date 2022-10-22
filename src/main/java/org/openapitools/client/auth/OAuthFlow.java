@@ -16,9 +16,10 @@ package org.openapitools.client.auth;
 /**
  * OAuth flows that are supported by this client
  */
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public enum OAuthFlow {
-    ACCESS_CODE,
+    ACCESS_CODE, //called authorizationCode  in OpenAPI 3.0
     IMPLICIT,
     PASSWORD,
-    APPLICATION
+    APPLICATION //called clientCredentials in OpenAPI 3.0
 }
